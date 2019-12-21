@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/billListFragment">
+
+    <fragment
+        android:id="@+id/billListFragment"
+        android:name="com.kszalai.billtracker.ui.bills.BillListFragment"
+        android:label="bill_list_fragment"
+        tools:layout="@layout/bill_list_fragment" >
+        <action
+            android:id="@+id/action_billListFragment_to_billDetailFragment"
+            app:destination="@id/billDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/billDetailFragment"
+        android:name="com.kszalai.billtracker.ui.billdetails.BillDetailFragment"
+        android:label="bill_detail_fragment"
+        tools:layout="@layout/bill_detail_fragment" />
+</navigation>
