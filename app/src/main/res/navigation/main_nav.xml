@@ -18,5 +18,5 @@
         android:id="@+id/billDetailFragment"
         android:name="com.kszalai.billtracker.ui.billdetails.BillDetailFragment"
         android:label="bill_detail_fragment"
-        tools:layout="@layout/bill_detail_fragment" />
+        tools:layout="@layout/bill_detail_fragment" /><action android:id="@+id/action_global_billListFragment" app:destination="@id/billListFragment"/>
 </navigation>

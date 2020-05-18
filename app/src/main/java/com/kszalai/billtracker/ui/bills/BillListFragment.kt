@@ -1,33 +1,39 @@
 package com.kszalai.billtracker.ui.bills
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import com.kszalai.billtracker.DI.Helpers.Injectable
 
 import com.kszalai.billtracker.R
+import com.kszalai.billtracker.databinding.BillListFragmentBinding
+import javax.inject.Inject
 
-class BillListFragment : Fragment() {
+class BillListFragment : Fragment(), Injectable {
 
     companion object {
         fun newInstance() = BillListFragment()
     }
 
-    private lateinit var viewModel: BillListViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: BillListViewModel by viewModels {
+        viewModelFactory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.bill_list_fragment, container, false)
-    }
+        val binding: BillListFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.bill_list_fragment, container, false)
+        binding?.viewmodel = viewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(BillListViewModel::class.java)
-        // TODO: Use the ViewModel
+        return binding.root
     }
-
 }
