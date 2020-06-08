@@ -3,4 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="backgroundFarOut">#81c784</color>
+    <color name="backgroundDueThisWeek">#fff176</color>
+    <color name="backgroundPastDue">#e57373</color>
 </resources>
