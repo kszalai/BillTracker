@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kszalai.billtracker.DI.Helpers.Injectable
 
@@ -56,6 +57,6 @@ class BillListFragment : Fragment(), Injectable {
 
     private fun setAdapter() {
         billListRecyclerView.layoutManager = LinearLayoutManager(context)
-        billListRecyclerView.adapter = BillListRecyclerViewAdapter()
+        billListRecyclerView.adapter = BillListRecyclerViewAdapter(navController = findNavController(), billRepo = viewModel.billRepo)
     }
 }

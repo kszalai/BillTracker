@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Bill Tracker</string>
+
+    <!-- Details -->
+    <string name="dueOn">Due On: </string>
+    <string name="datePaid">Date Paid: </string>
+    <string name="amountDue">Amount Due: </string>
+    <string name="amountPaid">Amount Paid: </string>
+    <string name="balance">Balance: </string>
+    <string name="newBalance">New Balance: </string>
+    <string name="paymentHistory">Payment History</string>
+    <string name="lateFees">Late Fees</string>
+    <string name="lastPayment">Last Payment</string>
 </resources>

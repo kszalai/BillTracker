@@ -1,47 +1,39 @@
 package com.kszalai.billtracker.ui.viewholders
 
 import android.view.View
+import androidx.navigation.NavController
 import com.kszalai.billtracker.R
+import com.kszalai.billtracker.helpers.determineColorFromDate
 import com.kszalai.billtracker.helpers.formatToCurrency
+import com.kszalai.billtracker.helpers.getIcon
 import com.kszalai.billtracker.helpers.toast
 import com.kszalai.billtracker.models.BillObject
 import com.kszalai.billtracker.models.BillType
+import com.kszalai.billtracker.repo.BillRepo
 import kotlinx.android.synthetic.main.bill_item_layout.view.*
 
-class BillViewHolder(itemView: View) : BaseViewHolder<BillObject>(itemView) {
+class BillViewHolder(itemView: View, val navController: NavController, val billRepo: BillRepo) : BaseViewHolder<BillObject>(itemView) {
 
     override fun bind(item: BillObject) {
         itemView.billName.text = item.billName
         itemView.amountDue.text = item.amount.formatToCurrency()
         itemView.dueDate.text = item.dueDate
         itemView.billCardView.setOnClickListener {
-            "You tapped ${item.billName}".toast(itemView.context)
+            billRepo.setSelectedBill(item)
+            navController.navigate(R.id.action_billListFragment_to_billDetailFragment)
         }
 
-        when (item.billType) {
-            BillType.CreditCard -> {
-                itemView.billLogo.setImageResource(R.drawable.credit_card_icon)
-            }
-            BillType.Mortgage -> {
-                itemView.billLogo.setImageResource(R.drawable.mortgage_icon)
-            }
-            BillType.Subscription -> {
-                itemView.billLogo.setImageResource(R.drawable.subscription_icon)
-            }
-            BillType.Utility -> {
-                itemView.billLogo.setImageResource(R.drawable.bill_icon)
-            }
-            BillType.Auto -> {
-                itemView.billLogo.setImageResource(R.drawable.auto_icon)
-            }
-        }
+        itemView.billLogo.setImageResource(item.billType.getIcon())
 
         if (item.balance != null) {
             itemView.balanceRemaining.visibility = View.VISIBLE
             itemView.balanceText.text = item.balance.formatToCurrency()
         }
+        else {
+            itemView.balanceRemaining.visibility = View.GONE
+        }
 
-        itemView.billCardView.setCardBackgroundColor(itemView.resources.getColor(R.color.backgroundFarOut))
+        itemView.billCardView.setCardBackgroundColor(itemView.resources.getColor(item.dueDate.determineColorFromDate()))
     }
 
 }

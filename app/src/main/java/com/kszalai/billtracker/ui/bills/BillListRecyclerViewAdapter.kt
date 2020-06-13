@@ -2,13 +2,17 @@ package com.kszalai.billtracker.ui.bills
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kszalai.billtracker.R
 import com.kszalai.billtracker.models.BillObject
+import com.kszalai.billtracker.repo.BillRepo
 import com.kszalai.billtracker.ui.viewholders.BaseViewHolder
 import com.kszalai.billtracker.ui.viewholders.BillViewHolder
 
-class BillListRecyclerViewAdapter(private var data: ArrayList<Any> = arrayListOf<Any>()) : RecyclerView.Adapter<BaseViewHolder<BillObject>>() {
+class BillListRecyclerViewAdapter(private var data: ArrayList<Any> = arrayListOf<Any>(),
+                                  private val navController: NavController,
+                                  private val billRepo: BillRepo) : RecyclerView.Adapter<BaseViewHolder<BillObject>>() {
 
     companion object {
         private val overViewItem = 0
@@ -19,7 +23,7 @@ class BillListRecyclerViewAdapter(private var data: ArrayList<Any> = arrayListOf
         val context = parent.context
 
         val view = LayoutInflater.from(context).inflate(R.layout.bill_item_layout, parent, false)
-        return BillViewHolder(view)
+        return BillViewHolder(view, navController, billRepo)
     }
 
     override fun getItemCount(): Int {

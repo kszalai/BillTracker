@@ -1,7 +1,5 @@
 package com.kszalai.billtracker.models
 
-import java.util.*
-
 data class BillObject(val billName: String,
                       var amount: Double,
                       var dueDate: String,
@@ -11,7 +9,10 @@ data class BillObject(val billName: String,
                       var balance: Double?,
                       var comments: String,
                       var fees: Array<BillFee>,
-                      val billType: BillType) {
+                      val billType: BillType,
+                      val pinned: Boolean,
+                      val link: String,
+                      val details: Any? = null) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -29,6 +30,9 @@ data class BillObject(val billName: String,
         if (comments != other.comments) return false
         if (!fees.contentEquals(other.fees)) return false
         if (billType != other.billType) return false
+        if (pinned != other.pinned) return false
+        if (link != other.link) return false
+        if (details != other.details) return false
 
         return true
     }
@@ -40,10 +44,13 @@ data class BillObject(val billName: String,
         result = 31 * result + pastDue.hashCode()
         result = 31 * result + (amountPaid?.hashCode() ?: 0)
         result = 31 * result + (datePaid?.hashCode() ?: 0)
-        result = 31 * result + balance.hashCode()
+        result = 31 * result + (balance?.hashCode() ?: 0)
         result = 31 * result + comments.hashCode()
         result = 31 * result + fees.contentHashCode()
         result = 31 * result + billType.hashCode()
+        result = 31 * result + pinned.hashCode()
+        result = 31 * result + link.hashCode()
+        result = 31 * result + details.hashCode()
         return result
     }
 
