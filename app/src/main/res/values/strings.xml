@@ -11,4 +11,9 @@
     <string name="paymentHistory">Payment History</string>
     <string name="lateFees">Late Fees</string>
     <string name="lastPayment">Last Payment</string>
+    <string name="creditInfoLabel">Credit Info</string>
+    <string name="creditLimit">Credit Limit: </string>
+    <string name="apr">APR: </string>
+    <string name="payHistDatePaidLabel">Payment Date</string>
+    <string name="payHistAmountLabel">Amount</string>
 </resources>
