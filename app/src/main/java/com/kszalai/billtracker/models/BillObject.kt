@@ -1,5 +1,7 @@
 package com.kszalai.billtracker.models
 
+import java.io.Serializable
+
 data class BillObject(val billName: String,
                       var amount: Double,
                       var dueDate: String,
@@ -12,7 +14,7 @@ data class BillObject(val billName: String,
                       val billType: BillType,
                       val pinned: Boolean,
                       val link: String,
-                      val details: Any? = null) {
+                      val details: Any? = null) : Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

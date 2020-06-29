@@ -18,6 +18,14 @@ fun Double?.formatToCurrency(): String {
     return "${formatter.format(this)}"
 }
 
+fun Double?.formatToPercentage(): String {
+    return this?.let {
+        "%.2f".format(this)
+    } ?: run {
+        "0.0%"
+    }
+}
+
 fun String.toast(context: Context, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(context, this, duration).show()
 }

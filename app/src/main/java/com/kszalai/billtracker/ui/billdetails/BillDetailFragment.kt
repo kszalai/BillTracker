@@ -16,6 +16,7 @@ import com.kszalai.billtracker.databinding.BillDetailFragmentBinding
 import com.kszalai.billtracker.helpers.determineColorFromDate
 import com.kszalai.billtracker.helpers.formatToCurrency
 import com.kszalai.billtracker.helpers.getIcon
+import com.kszalai.billtracker.models.BillObject
 import kotlinx.android.synthetic.main.bill_detail_fragment.*
 import javax.inject.Inject
 
@@ -44,18 +45,8 @@ class BillDetailFragment : Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setObservers()
-    }
-
-    private fun setObservers() {
-        viewModel.billRepo.selectedBill.observe(viewLifecycleOwner, Observer {
-            billDetailName.text = it.billName
-            billDetailAmountDue.text = it.amount.formatToCurrency()
-            billDetailDueOn.text = it.dueDate
-            billDetailDueInfoCardView.setCardBackgroundColor(resources.getColor(it.dueDate.determineColorFromDate()))
-            billDetailAmountPaid.text = it.amountPaid.formatToCurrency()
-            billDetailPaidOn.text = it.datePaid
-            billDetailImage.setImageResource(it.billType.getIcon())
-        })
+        arguments?.get("selectedBill")?.let {
+            viewModel.setBill(it as BillObject)
+        }
     }
 }
