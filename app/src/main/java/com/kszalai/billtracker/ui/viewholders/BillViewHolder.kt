@@ -15,8 +15,8 @@ class BillViewHolder(itemView: View, private val navController: NavController, p
 
     override fun bind(item: BillObject) {
         itemView.billName.text = item.billName
-        itemView.amountDue.text = item.amount.formatToCurrency()
-        itemView.dueDate.text = item.dueDate
+        itemView.amountDue.text = item.nextPayment.amount.formatToCurrency()
+        itemView.dueDate.text = item.nextPayment.paymentDate
         itemView.billCardView.setOnClickListener {
             val bundle = bundleOf("selectedBill" to item)
             navController.navigate(R.id.action_billListFragment_to_billDetailFragment, bundle)
@@ -31,7 +31,7 @@ class BillViewHolder(itemView: View, private val navController: NavController, p
             itemView.balanceRemaining.visibility = View.GONE
         }
 
-        itemView.billCardView.setCardBackgroundColor(itemView.resources.getColor(item.dueDate.determineColorFromDate()))
+        itemView.billCardView.setCardBackgroundColor(itemView.resources.getColor(item.nextPayment.paymentDate.determineColorFromDate()))
     }
 
 }

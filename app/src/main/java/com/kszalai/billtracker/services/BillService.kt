@@ -1,7 +1,9 @@
 package com.kszalai.billtracker.services
 
 import com.kszalai.billtracker.models.BillObject
+import com.kszalai.billtracker.models.BillPayment
 import com.kszalai.billtracker.models.BillType
+import com.kszalai.billtracker.models.CreditCardLimit
 
 class BillService {
 
@@ -10,27 +12,24 @@ class BillService {
         test.add(
             BillObject(
                 billName = "Discover",
-                amount = 129.70,
-                dueDate = "06/06/2020",
+                nextPayment = BillPayment(amount = 129.70, paymentDate = "06/06/2020"),
                 pastDue = 0.0,
-                amountPaid = 0.0,
-                datePaid = null,
+                lastPayment = null,
                 balance = null,
                 comments = "",
                 fees = emptyArray(),
                 billType = BillType.CreditCard,
                 link = "",
-                pinned = false
+                pinned = false,
+                details = CreditCardLimit(3000.0, 15.69)
             )
         )
         test.add(
             BillObject(
                 billName = "Rocket Mortgage",
-                amount = 600.00,
-                dueDate = "06/20/2020",
+                nextPayment = BillPayment(amount = 600.0, paymentDate = "07/20/2020"),
                 pastDue = 0.0,
-                amountPaid = 0.0,
-                datePaid = null,
+                lastPayment = BillPayment(amount = 600.0, paymentDate = "06/06/2020"),
                 balance = 100000.0,
                 comments = "",
                 fees = emptyArray(),
@@ -42,11 +41,9 @@ class BillService {
         test.add(
             BillObject(
                 billName = "Ford EcoSport",
-                amount = 350.00,
-                dueDate = "06/28/2020",
+                nextPayment = BillPayment(amount = 350.0, paymentDate = "07/28/2020"),
                 pastDue = 0.0,
-                amountPaid = 0.0,
-                datePaid = null,
+                lastPayment = null,
                 balance = 25000.0,
                 comments = "",
                 fees = emptyArray(),

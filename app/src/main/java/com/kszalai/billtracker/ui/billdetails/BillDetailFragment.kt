@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kszalai.billtracker.DI.Helpers.Injectable
 
 import com.kszalai.billtracker.R
@@ -38,7 +40,7 @@ class BillDetailFragment : Fragment(), Injectable {
         savedInstanceState: Bundle?
     ): View? {
         val binding: BillDetailFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.bill_detail_fragment, container, false)
-        binding?.viewmodel = viewModel
+        binding.viewmodel = viewModel
 
         return binding.root
     }
@@ -48,5 +50,29 @@ class BillDetailFragment : Fragment(), Injectable {
         arguments?.get("selectedBill")?.let {
             viewModel.setBill(it as BillObject)
         }
+        setupRecyclerView()
+        setObservers()
+    }
+
+    private fun setupRecyclerView() {
+        val billDetailRecyclerViewAdapter = BillDetailRecyclerViewAdapter()
+        val llm = LinearLayoutManager(context)
+
+        billDetailPaymentRecyclerView.apply {
+            adapter = billDetailRecyclerViewAdapter
+            layoutManager = llm
+            itemAnimator = DefaultItemAnimator()
+        }
+    }
+
+    private fun setObservers() {
+        viewModel.detailItems.observe(viewLifecycleOwner, Observer {
+            val adapter = billDetailPaymentRecyclerView.adapter as BillDetailRecyclerViewAdapter
+            adapter.setData(it)
+        })
+
+        viewModel.lastPaidVisibility.observe(viewLifecycleOwner, Observer {
+            billDetailPaidInfoCardView.visibility = it
+        })
     }
 }

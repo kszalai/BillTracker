@@ -23,8 +23,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/billDetailDueInfoCardView"
-            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintVertical_bias="0.0">
 
             <ImageView
@@ -63,11 +61,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/billDetailNameContainer"
-            app:layout_constraintEnd_toEndOf="@id/billDetailNameContainer"
-            app:layout_constraintTop_toBottomOf="@id/billDetailNameContainer"
-            app:layout_constraintBottom_toTopOf="@id/billDetailPaidInfoCardView"
-            app:layout_constraintVertical_chainStyle="packed">
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/billDetailNameContainer">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/billDetailDueInfoContainer"
@@ -145,11 +142,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/billDetailDueInfoCardView"
-            app:layout_constraintEnd_toEndOf="@id/billDetailDueInfoCardView"
-            app:layout_constraintTop_toBottomOf="@id/billDetailDueInfoCardView"
-            app:layout_constraintBottom_toTopOf="@id/billDetailPaymentRecyclerView"
-            app:layout_constraintVertical_chainStyle="packed">
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/billDetailDueInfoCardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/billDetailPaidInfoContainer"
@@ -197,11 +193,12 @@
                     android:text="@{viewmodel.lastPaidAmount}"
                     android:textSize="20sp"
                     android:textStyle="italic"
-                    app:layout_constraintStart_toEndOf="@id/bill_detail_amount_paid_text"
-                    app:layout_constraintTop_toTopOf="@id/bill_detail_amount_paid_text"
                     app:layout_constraintBottom_toBottomOf="@id/bill_detail_amount_paid_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="packed"/>
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/bill_detail_amount_paid_text"
+                    app:layout_constraintTop_toTopOf="@id/bill_detail_amount_paid_text"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/bill_detail_paid_on_text"
@@ -222,6 +219,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:layout_marginStart="3dp"
                     android:text="@{viewmodel.lastPaidDate}"
                     android:textStyle="italic"
                     app:layout_constraintStart_toEndOf="@id/bill_detail_paid_on_text"
@@ -239,11 +237,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintTop_toBottomOf="@id/billDetailPaidInfoCardView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/billDetailPaidInfoCardView"
-            app:layout_constraintEnd_toEndOf="@id/billDetailPaidInfoCardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_chainStyle="packed"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

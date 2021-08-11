@@ -7,14 +7,14 @@ import com.kszalai.billtracker.R
 import com.kszalai.billtracker.helpers.formatToCurrency
 import com.kszalai.billtracker.helpers.formatToPercentage
 import com.kszalai.billtracker.models.BillDetailRecyclerViewItems
-import com.kszalai.billtracker.models.BillPaymentHistory
+import com.kszalai.billtracker.models.BillPayment
 import com.kszalai.billtracker.models.CreditCardLimit
 import kotlinx.android.synthetic.main.detail_rv_credit_info.view.*
 import kotlinx.android.synthetic.main.detail_rv_payment_hist_item.view.*
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 
-class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any> = arrayListOf()) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val paymentHistoryHeader = 1
@@ -31,7 +31,7 @@ class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any>) : Recycle
                 LayoutInflater.from(parent.context).inflate(R.layout.detail_rv_payment_hist_item, parent, false)
             }
             creditLimitItem -> {
-                LayoutInflater.from(parent.context).inflate(R.layout.detail_rv_payment_hist_item, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.detail_rv_credit_info, parent, false)
             }
             else -> {
                 throw Exception("Invalid viewType received")
@@ -46,8 +46,8 @@ class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any>) : Recycle
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             paymentHistoryItem -> {
-                val data = items[position] as BillPaymentHistory
-                holder.itemView.paymentHistoryDate.text = data.datePaid
+                val data = items[position] as BillPayment
+                holder.itemView.paymentHistoryDate.text = data.paymentDate
                 holder.itemView.paymentAmount.text = data.amount.formatToCurrency()
             }
             creditLimitItem -> {
@@ -61,9 +61,14 @@ class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any>) : Recycle
     override fun getItemViewType(position: Int): Int {
         return when(items[position]) {
             BillDetailRecyclerViewItems.PaymentHeader -> paymentHistoryHeader
-            is BillPaymentHistory -> paymentHistoryItem
+            is BillPayment -> paymentHistoryItem
             is CreditCardLimit -> creditLimitItem
             else -> throw IllegalArgumentException("Invalid item received!")
         }
+    }
+
+    fun setData(data: ArrayList<Any>) {
+        items = data
+        notifyDataSetChanged()
     }
 }

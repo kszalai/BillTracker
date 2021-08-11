@@ -20,7 +20,7 @@ fun Double?.formatToCurrency(): String {
 
 fun Double?.formatToPercentage(): String {
     return this?.let {
-        "%.2f".format(this)
+        "${"%.2f".format(this)}%"
     } ?: run {
         "0.0%"
     }
