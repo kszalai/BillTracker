@@ -1,4 +1,4 @@
-package com.kszalai.billtracker.DI.Helpers
+package com.kszalai.billtracker.di.helpers
 
 /**
  * Marks an Activity / Fragment injectable

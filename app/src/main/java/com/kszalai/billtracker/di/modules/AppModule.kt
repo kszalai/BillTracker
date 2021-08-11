@@ -1,12 +1,15 @@
-package com.kszalai.billtracker.DI.Modules
+package com.kszalai.billtracker.di.modules
 
 import com.kszalai.billtracker.repo.BillRepo
 import com.kszalai.billtracker.services.BillService
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module(includes = [ ViewModelModule::class ])
+@InstallIn(SingletonComponent::class)
+@Module()
 class AppModule {
 
     @Provides

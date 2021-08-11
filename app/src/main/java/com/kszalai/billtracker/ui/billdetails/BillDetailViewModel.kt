@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.kszalai.billtracker.helpers.formatToCurrency
 import com.kszalai.billtracker.models.*
 import com.kszalai.billtracker.repo.BillRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class BillDetailViewModel @Inject constructor(val billRepo: BillRepo) : ViewModel() {
     var selectedBill: BillObject? = null
     var billName: String? = null

@@ -5,6 +5,15 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/activity_main.xml" value="0.3134057971014493" />
+        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/bill_item_layout.xml" value="0.20572916666666666" />
+        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/bill_list_fragment.xml" value="0.20572916666666666" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
