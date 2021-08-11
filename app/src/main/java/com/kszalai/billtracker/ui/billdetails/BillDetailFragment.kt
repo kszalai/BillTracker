@@ -9,13 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kszalai.billtracker.di.helpers.Injectable
 import com.kszalai.billtracker.databinding.BillDetailFragmentBinding
 import com.kszalai.billtracker.models.BillObject
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BillDetailFragment : Fragment(), Injectable {
+class BillDetailFragment : Fragment() {
 
     companion object {
         fun newInstance() = BillDetailFragment()

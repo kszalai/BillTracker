@@ -38,7 +38,6 @@ class BillListRecyclerViewAdapter(private var data: ArrayList<Any> = arrayListOf
 
     fun setData(bills: ArrayList<Any>) {
         data.clear()
-        notifyDataSetChanged()
         data.addAll(bills)
         notifyDataSetChanged()
     }
