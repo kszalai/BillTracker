@@ -3,16 +3,14 @@ package com.kszalai.billtracker.ui.billdetails
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kszalai.billtracker.R
-import com.kszalai.billtracker.helpers.formatToCurrency
-import com.kszalai.billtracker.helpers.formatToPercentage
+import com.kszalai.billtracker.databinding.DetailRvCreditInfoBinding
+import com.kszalai.billtracker.databinding.DetailRvPaymentHistHeaderBinding
+import com.kszalai.billtracker.databinding.DetailRvPaymentHistItemBinding
 import com.kszalai.billtracker.models.BillDetailRecyclerViewItems
 import com.kszalai.billtracker.models.BillPayment
 import com.kszalai.billtracker.models.CreditCardLimit
-import kotlinx.android.synthetic.main.detail_rv_credit_info.view.*
-import kotlinx.android.synthetic.main.detail_rv_payment_hist_item.view.*
-import java.lang.Exception
-import java.lang.IllegalArgumentException
+import com.kszalai.billtracker.ui.viewholders.DetailCreditViewHolder
+import com.kszalai.billtracker.ui.viewholders.DetailHistoryViewHolder
 
 class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any> = arrayListOf()) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -23,22 +21,23 @@ class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any> = arrayLis
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = when(viewType) {
+        return when(viewType) {
             paymentHistoryHeader -> {
-                LayoutInflater.from(parent.context).inflate(R.layout.detail_rv_payment_hist_header, parent, false)
+                val binding = DetailRvPaymentHistHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                object : RecyclerView.ViewHolder(binding.root) { }
             }
             paymentHistoryItem -> {
-                LayoutInflater.from(parent.context).inflate(R.layout.detail_rv_payment_hist_item, parent, false)
+                val binding = DetailRvPaymentHistItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                DetailHistoryViewHolder(binding)
             }
             creditLimitItem -> {
-                LayoutInflater.from(parent.context).inflate(R.layout.detail_rv_credit_info, parent, false)
+                val binding = DetailRvCreditInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                DetailCreditViewHolder(binding)
             }
             else -> {
                 throw Exception("Invalid viewType received")
             }
         }
-
-        return object : RecyclerView.ViewHolder(view) { }
     }
 
     override fun getItemCount(): Int = items.size
@@ -46,14 +45,10 @@ class BillDetailRecyclerViewAdapter(private var items: ArrayList<Any> = arrayLis
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             paymentHistoryItem -> {
-                val data = items[position] as BillPayment
-                holder.itemView.paymentHistoryDate.text = data.paymentDate
-                holder.itemView.paymentAmount.text = data.amount.formatToCurrency()
+                (holder as DetailHistoryViewHolder).bind(items[position] as BillPayment)
             }
             creditLimitItem -> {
-                val data = items[position] as CreditCardLimit
-                holder.itemView.detailCreditLimitValue.text = data.creditLimit.formatToCurrency()
-                holder.itemView.detailCreditAprValue.text = data.apr.formatToPercentage()
+                (holder as DetailCreditViewHolder).bind(items[position] as CreditCardLimit)
             }
         }
     }

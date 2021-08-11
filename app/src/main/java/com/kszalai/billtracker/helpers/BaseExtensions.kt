@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.Toast
 import com.kszalai.billtracker.R
 import com.kszalai.billtracker.models.BillType
-import kotlinx.android.synthetic.main.bill_item_layout.view.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*

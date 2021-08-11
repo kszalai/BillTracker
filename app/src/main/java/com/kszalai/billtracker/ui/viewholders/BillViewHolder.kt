@@ -1,37 +1,38 @@
 package com.kszalai.billtracker.ui.viewholders
 
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.kszalai.billtracker.R
+import com.kszalai.billtracker.databinding.BillItemLayoutBinding
 import com.kszalai.billtracker.helpers.determineColorFromDate
 import com.kszalai.billtracker.helpers.formatToCurrency
 import com.kszalai.billtracker.helpers.getIcon
 import com.kszalai.billtracker.models.BillObject
 import com.kszalai.billtracker.repo.BillRepo
-import kotlinx.android.synthetic.main.bill_item_layout.view.*
 
-class BillViewHolder(itemView: View, private val navController: NavController, private val billRepo: BillRepo) : BaseViewHolder<BillObject>(itemView) {
+class BillViewHolder(override val viewBinding: BillItemLayoutBinding, private val navController: NavController, private val billRepo: BillRepo) : BaseViewHolder<BillObject>(viewBinding) {
 
     override fun bind(item: BillObject) {
-        itemView.billName.text = item.billName
-        itemView.amountDue.text = item.nextPayment.amount.formatToCurrency()
-        itemView.dueDate.text = item.nextPayment.paymentDate
-        itemView.billCardView.setOnClickListener {
+        viewBinding.billName.text = item.billName
+        viewBinding.amountDue.text = item.nextPayment.amount.formatToCurrency()
+        viewBinding.dueDate.text = item.nextPayment.paymentDate
+        viewBinding.billCardView.setOnClickListener {
             val bundle = bundleOf("selectedBill" to item)
             navController.navigate(R.id.action_billListFragment_to_billDetailFragment, bundle)
         }
 
-        itemView.billLogo.setImageResource(item.billType.getIcon())
+        viewBinding.billLogo.setImageResource(item.billType.getIcon())
 
         item.balance?.let {
-            itemView.balanceRemaining.visibility = View.VISIBLE
-            itemView.balanceText.text = item.balance.formatToCurrency()
+            viewBinding.balanceRemaining.visibility = View.VISIBLE
+            viewBinding.balanceText.text = item.balance.formatToCurrency()
         } ?: run {
-            itemView.balanceRemaining.visibility = View.GONE
+            viewBinding.balanceRemaining.visibility = View.GONE
         }
 
-        itemView.billCardView.setCardBackgroundColor(itemView.resources.getColor(item.nextPayment.paymentDate.determineColorFromDate()))
+        viewBinding.billCardView.setCardBackgroundColor(ResourcesCompat.getColor(viewBinding.root.context.resources, item.nextPayment.paymentDate.determineColorFromDate(), null))
     }
 
 }
