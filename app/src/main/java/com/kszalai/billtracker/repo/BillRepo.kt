@@ -9,14 +9,14 @@ import javax.inject.Singleton
 @Singleton
 class BillRepo(private val billService: BillService) {
 
-    private val _bills = MutableLiveData<ArrayList<Any>>()
-    val bills: LiveData<ArrayList<Any>> = _bills
+    private val _bills = MutableLiveData<List<BillObject>>()
+    val bills: LiveData<List<BillObject>> = _bills
 
     init {
         _bills.postValue(billService.getBills())
     }
 
-    fun setBills(bills: ArrayList<Any>) {
+    fun setBills(bills: List<BillObject>) {
         _bills.postValue(bills)
     }
 

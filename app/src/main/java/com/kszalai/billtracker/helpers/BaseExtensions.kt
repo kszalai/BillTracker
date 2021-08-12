@@ -2,8 +2,14 @@ package com.kszalai.billtracker.helpers
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.kszalai.billtracker.R
 import com.kszalai.billtracker.models.BillType
+import com.kszalai.billtracker.theme.dueThisWeek
+import com.kszalai.billtracker.theme.farOut
+import com.kszalai.billtracker.theme.pastDue
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,6 +45,20 @@ fun String.determineColorFromDate(): Int {
         (diff < 0) -> R.color.backgroundPastDue
         (diff <= 7) -> R.color.backgroundDueThisWeek
         else -> R.color.backgroundFarOut
+    }
+}
+
+@Composable
+fun String.determineComposableColorFromDate(): Color {
+    val sdf = SimpleDateFormat("MM/dd/yyyy")
+    val theDate = sdf.parse(this)
+    val now = Date()
+    val diff = TimeUnit.DAYS.convert(theDate.time - now.time, TimeUnit.MILLISECONDS)
+
+    return when {
+        (diff < 0) -> MaterialTheme.colors.pastDue
+        (diff <= 7) -> MaterialTheme.colors.dueThisWeek
+        else -> MaterialTheme.colors.farOut
     }
 }
 
