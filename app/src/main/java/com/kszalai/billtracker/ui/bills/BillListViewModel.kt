@@ -12,6 +12,6 @@ import kotlin.collections.ArrayList
 
 @HiltViewModel
 class BillListViewModel @Inject constructor(val billRepo: BillRepo) : ViewModel() {
-    val bills: LiveData<ArrayList<Any>> = billRepo.bills
+    val bills: LiveData<List<BillObject>> = billRepo.bills
 
 }

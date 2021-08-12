@@ -7,8 +7,8 @@ import com.kszalai.billtracker.models.CreditCardLimit
 
 class BillService {
 
-    fun getBills(): ArrayList<Any> {
-        val test = ArrayList<Any>()
+    fun getBills(): List<BillObject> {
+        val test = ArrayList<BillObject>()
         test.add(
             BillObject(
                 billName = "Discover",
@@ -53,7 +53,7 @@ class BillService {
             )
         )
 
-        return test
+        return test.toList()
     }
 
 }
