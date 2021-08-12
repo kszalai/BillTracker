@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kszalai.billtracker.models.BillObject
 import com.kszalai.billtracker.models.SampleBillObjectList
-import com.kszalai.billtracker.ui.viewholders.BillComposable
+import com.kszalai.billtracker.ui.viewholders.BillOverview
 
 @ExperimentalMaterialApi
 @Composable
@@ -23,8 +23,7 @@ fun BillListScreen(
 ) {
     LazyColumn {
         items(bills) { bill ->
-            BillComposable(data = bill, onNavigate = onNavigate)
-            Spacer(modifier = Modifier.height(16.dp))
+            BillOverview(data = bill, onNavigate = onNavigate)
         }
     }
 }

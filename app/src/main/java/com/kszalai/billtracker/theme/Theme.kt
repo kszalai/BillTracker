@@ -31,11 +31,10 @@ private val darkColorPalette = darkColors(
 
 @Composable
 fun BillTrackerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = if (darkTheme) lightColorPalette else darkColorPalette,
+        colors = if (isSystemInDarkTheme()) lightColorPalette else darkColorPalette,
         typography = MaterialTheme.typography,
         shapes = MaterialTheme.shapes,
         content = content

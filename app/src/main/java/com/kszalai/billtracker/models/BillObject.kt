@@ -65,7 +65,7 @@ object SampleBillObjectList {
     val data = arrayListOf(
         BillObject(
             billName = "Discover",
-            nextPayment = BillPayment(amount = 129.70, paymentDate = "06/06/2020"),
+            nextPayment = BillPayment(amount = 129.70, paymentDate = "09/30/2021"),
             pastDue = 0.0,
             lastPayment = null,
             balance = null,
@@ -78,9 +78,9 @@ object SampleBillObjectList {
         ),
         BillObject(
             billName = "Rocket Mortgage",
-            nextPayment = BillPayment(amount = 600.0, paymentDate = "07/20/2020"),
+            nextPayment = BillPayment(amount = 600.0, paymentDate = "08/20/2021"),
             pastDue = 0.0,
-            lastPayment = BillPayment(amount = 600.0, paymentDate = "06/06/2020"),
+            lastPayment = BillPayment(amount = 600.0, paymentDate = "07/20/2021"),
             balance = 100000.0,
             comments = "",
             fees = emptyArray(),
@@ -90,7 +90,7 @@ object SampleBillObjectList {
         ),
         BillObject(
             billName = "Ford EcoSport",
-            nextPayment = BillPayment(amount = 350.0, paymentDate = "07/28/2020"),
+            nextPayment = BillPayment(amount = 350.0, paymentDate = "07/28/2021"),
             pastDue = 0.0,
             lastPayment = null,
             balance = 25000.0,

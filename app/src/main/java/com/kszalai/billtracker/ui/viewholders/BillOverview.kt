@@ -27,13 +27,15 @@ import com.kszalai.billtracker.theme.billTextColor
 
 @ExperimentalMaterialApi
 @Composable
-fun BillComposable(
+fun BillOverview(
     data: BillObject,
     onNavigate: (Int, Bundle) -> Unit
 ) {
     BillTrackerTheme {
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 8.dp),
             backgroundColor = data.nextPayment.paymentDate.determineComposableColorFromDate(),
             onClick = {
                 val bundle = bundleOf("selectedBill" to data)
@@ -107,9 +109,9 @@ fun BillComposable(
     name = "Dark Mode"
 )
 @Composable
-fun PreviewBillComposable() {
-    BillComposable(
+fun PreviewBillOverview() {
+    BillOverview(
         data = SampleBillObjectList.data[0],
-        onNavigate = { dest, bundle ->  }
+        onNavigate = { dest, bundle -> }
     )
 }
