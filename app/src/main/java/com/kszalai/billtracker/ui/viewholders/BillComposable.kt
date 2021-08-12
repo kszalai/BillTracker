@@ -1,9 +1,11 @@
 package com.kszalai.billtracker.ui.viewholders
 
 import android.content.res.Configuration
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,23 +16,29 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
+import com.kszalai.billtracker.R
 import com.kszalai.billtracker.helpers.determineComposableColorFromDate
 import com.kszalai.billtracker.helpers.formatToCurrency
 import com.kszalai.billtracker.helpers.getIcon
-import com.kszalai.billtracker.models.BillObject
-import com.kszalai.billtracker.models.BillPayment
-import com.kszalai.billtracker.models.BillType
-import com.kszalai.billtracker.models.CreditCardLimit
+import com.kszalai.billtracker.models.*
 import com.kszalai.billtracker.theme.BillTrackerTheme
 import com.kszalai.billtracker.theme.billTextColor
 
+@ExperimentalMaterialApi
 @Composable
 fun BillComposable(
-    data: BillObject
+    data: BillObject,
+    onNavigate: (Int, Bundle) -> Unit
 ) {
     BillTrackerTheme {
         Card(
-            backgroundColor = data.nextPayment.paymentDate.determineComposableColorFromDate()
+            modifier = Modifier.fillMaxWidth(),
+            backgroundColor = data.nextPayment.paymentDate.determineComposableColorFromDate(),
+            onClick = {
+                val bundle = bundleOf("selectedBill" to data)
+                onNavigate(R.id.action_billListFragment_to_billDetailFragment, bundle)
+            }
         ) {
             Column(
                 modifier = Modifier
@@ -49,7 +57,8 @@ fun BillComposable(
                     Text(
                         text = data.billName,
                         fontSize = 20.sp,
-                        color = MaterialTheme.colors.billTextColor
+                        color = MaterialTheme.colors.billTextColor,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
@@ -91,29 +100,16 @@ fun BillComposable(
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ExperimentalMaterialApi
+@Preview(name = "Light Mode")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "Dark Mode"
+)
 @Composable
 fun PreviewBillComposable() {
     BillComposable(
-        data = BillObject(
-            billName = "Discover",
-            nextPayment = BillPayment(
-                amount = 150.70,
-                paymentDate = "06/06/2020"
-            ),
-            pastDue = 0.0,
-            lastPayment = null,
-            balance = null,
-            comments = "",
-            fees = emptyArray(),
-            billType = BillType.CreditCard,
-            link = "",
-            pinned = false,
-            details = CreditCardLimit(
-                creditLimit = 3000.0,
-                apr = 15.69
-            )
-        )
+        data = SampleBillObjectList.data[0],
+        onNavigate = { dest, bundle ->  }
     )
 }

@@ -15,12 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BillListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = BillListFragment()
-    }
-
     private val viewModel: BillListViewModel by viewModels()
-
     lateinit var binding: BillListFragmentBinding
 
     override fun onCreateView(
@@ -34,7 +29,6 @@ class BillListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setAdapter()
         setObservers()
     }
 
@@ -43,13 +37,5 @@ class BillListFragment : Fragment() {
             val adapter = binding.billListRecyclerView.adapter as BillListRecyclerViewAdapter
             adapter.setData(it)
         })
-    }
-
-    private fun setAdapter() {
-        binding.billListRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.billListRecyclerView.adapter = BillListRecyclerViewAdapter(
-            navController = findNavController(),
-            billRepo = viewModel.billRepo
-        )
     }
 }
