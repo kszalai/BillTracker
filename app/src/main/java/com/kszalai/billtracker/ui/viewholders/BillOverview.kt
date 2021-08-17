@@ -42,15 +42,8 @@ fun BillOverview(
                 onNavigate(R.id.action_billListFragment_to_billDetailFragment, bundle)
             }
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(
-                        all = 20.dp
-                    )
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+            Column(modifier = Modifier.padding(all = 20.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(id = data.billType.getIcon()),
                         contentDescription = null
@@ -64,9 +57,7 @@ fun BillOverview(
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = data.nextPayment.amount.formatToCurrency(),
                         fontSize = 12.sp,
@@ -80,9 +71,7 @@ fun BillOverview(
                     )
                 }
                 data.balance?.let {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = "Balance:",
                             fontSize = 12.sp,
