@@ -38,7 +38,12 @@ class BillListFragment : Fragment() {
     private fun setObservers() {
         viewModel.bills.observe(viewLifecycleOwner, Observer {
             binding.billListComposeView.setContent {
-                BillListScreen(bills = it, onNavigate = { dest, bundle -> findNavController().navigate(dest, bundle) })
+                BillListScreen(
+                    bills = it,
+                    onNavigate = { dest, bundle ->
+                        findNavController().navigate(dest, bundle)
+                    }
+                )
             }
         })
     }
