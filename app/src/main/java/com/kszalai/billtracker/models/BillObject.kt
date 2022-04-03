@@ -2,17 +2,23 @@ package com.kszalai.billtracker.models
 
 import java.io.Serializable
 
-data class BillObject(val billName: String,
-                      var nextPayment: BillPayment,
-                      var pastDue: Double,
-                      var lastPayment: BillPayment?,
-                      var balance: Double?,
-                      var comments: String,
-                      var fees: Array<BillFee>,
-                      val billType: BillType,
-                      val pinned: Boolean,
-                      val link: String,
-                      val details: Any? = null) : Serializable {
+data class BillObject(
+    val billName: String = "",
+    var nextPayment: BillPayment = BillPayment(
+        paymentDate = "",
+        _amount = 0.0
+    ),
+    var pastDue: Double = 0.0,
+    var lastPayment: BillPayment? = null,
+    var balance: Double? = null,
+    var comments: String = "",
+    var fees: Array<BillFee> = emptyArray(),
+    val billType: BillType = BillType.Unspecified,
+    val pinned: Boolean = false,
+    val link: String = "",
+    val paymentHistory: List<BillPayment> = emptyList(),
+    val details: Any? = null
+) : Serializable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -50,22 +56,25 @@ data class BillObject(val billName: String,
     }
 }
 
-data class BillFee(var amount: Double,
-                   var reason: String)
+data class BillFee(
+    var amount: Double,
+    var reason: String
+)
 
 enum class BillType {
     CreditCard,
     Utility,
     Mortgage,
     Subscription,
-    Auto
+    Auto,
+    Unspecified
 }
 
 object SampleBillObjectList {
     val data = arrayListOf(
         BillObject(
             billName = "Discover",
-            nextPayment = BillPayment(amount = 129.70, paymentDate = "09/30/2021"),
+            nextPayment = BillPayment(_amount = 129.70, paymentDate = "09/30/2021"),
             pastDue = 0.0,
             lastPayment = null,
             balance = null,
@@ -78,9 +87,9 @@ object SampleBillObjectList {
         ),
         BillObject(
             billName = "Rocket Mortgage",
-            nextPayment = BillPayment(amount = 600.0, paymentDate = "08/20/2021"),
+            nextPayment = BillPayment(_amount = 600.0, paymentDate = "08/20/2021"),
             pastDue = 0.0,
-            lastPayment = BillPayment(amount = 600.0, paymentDate = "07/20/2021"),
+            lastPayment = BillPayment(_amount = 600.0, paymentDate = "07/20/2021"),
             balance = 100000.0,
             comments = "",
             fees = emptyArray(),
@@ -90,7 +99,7 @@ object SampleBillObjectList {
         ),
         BillObject(
             billName = "Ford EcoSport",
-            nextPayment = BillPayment(amount = 350.0, paymentDate = "07/28/2021"),
+            nextPayment = BillPayment(_amount = 350.0, paymentDate = "07/28/2021"),
             pastDue = 0.0,
             lastPayment = null,
             balance = 25000.0,

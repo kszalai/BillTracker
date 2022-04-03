@@ -1,4 +1,4 @@
-package com.kszalai.billtracker.ui.viewholders
+package com.kszalai.billtracker.common.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding

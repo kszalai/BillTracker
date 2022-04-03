@@ -1,7 +1,7 @@
 package com.kszalai.billtracker.di
 
-import com.kszalai.billtracker.repo.BillRepo
-import com.kszalai.billtracker.services.BillService
+import com.kszalai.billtracker.bills.common.repo.BillRepo
+import com.kszalai.billtracker.bills.common.services.BillService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

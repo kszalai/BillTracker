@@ -1,15 +1,12 @@
-package com.kszalai.billtracker.helpers
+package com.kszalai.billtracker.common.extensions
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.kszalai.billtracker.R
+import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.models.BillType
-import com.kszalai.billtracker.theme.dueThisWeek
-import com.kszalai.billtracker.theme.farOut
-import com.kszalai.billtracker.theme.pastDue
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,9 +53,9 @@ fun String.determineComposableColorFromDate(): Color {
     val diff = TimeUnit.DAYS.convert(theDate.time - now.time, TimeUnit.MILLISECONDS)
 
     return when {
-        (diff < 0) -> MaterialTheme.colors.pastDue
-        (diff <= 7) -> MaterialTheme.colors.dueThisWeek
-        else -> MaterialTheme.colors.farOut
+        (diff < 0) -> BillTrackerColors.PastDue
+        (diff <= 7) -> BillTrackerColors.DueThisWeek
+        else -> BillTrackerColors.FarOut
     }
 }
 
@@ -69,5 +66,6 @@ fun BillType.getIcon(): Int {
         BillType.Subscription -> R.drawable.subscription_icon
         BillType.Utility -> R.drawable.bill_icon
         BillType.Auto -> R.drawable.auto_icon
+        BillType.Unspecified -> R.drawable.bill_icon
     }
 }
