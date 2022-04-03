@@ -2,7 +2,7 @@ package com.kszalai.billtracker.bills
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.kszalai.billtracker.models.BillObject
+import com.kszalai.billtracker.bills.common.models.BillObject
 import com.kszalai.billtracker.bills.common.repo.BillRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

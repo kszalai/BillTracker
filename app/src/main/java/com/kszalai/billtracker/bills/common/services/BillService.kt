@@ -1,9 +1,9 @@
 package com.kszalai.billtracker.bills.common.services
 
-import com.kszalai.billtracker.models.BillObject
-import com.kszalai.billtracker.models.BillPayment
-import com.kszalai.billtracker.models.BillType
-import com.kszalai.billtracker.models.CreditCardLimit
+import com.kszalai.billtracker.bills.common.models.BillObject
+import com.kszalai.billtracker.bills.common.models.BillPayment
+import com.kszalai.billtracker.bills.common.models.BillType
+import com.kszalai.billtracker.bills.common.models.CreditCardLimit
 
 class BillService {
 

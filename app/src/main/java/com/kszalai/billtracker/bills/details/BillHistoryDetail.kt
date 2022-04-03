@@ -26,7 +26,7 @@ import com.kszalai.billtracker.common.extensions.formatToPercentage
 import com.kszalai.billtracker.common.extensions.getIcon
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
-import com.kszalai.billtracker.models.*
+import com.kszalai.billtracker.bills.common.models.*
 
 @Composable
 fun BillDetails(

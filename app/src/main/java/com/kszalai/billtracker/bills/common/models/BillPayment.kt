@@ -1,4 +1,4 @@
-package com.kszalai.billtracker.models
+package com.kszalai.billtracker.bills.common.models
 
 import com.kszalai.billtracker.common.extensions.formatToCurrency
 

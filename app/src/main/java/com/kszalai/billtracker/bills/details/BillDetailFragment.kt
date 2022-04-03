@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.kszalai.billtracker.databinding.BillDetailFragmentBinding
-import com.kszalai.billtracker.models.BillObject
+import com.kszalai.billtracker.bills.common.models.BillObject
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

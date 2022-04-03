@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.kszalai.billtracker.R
 import com.kszalai.billtracker.common.theme.BillTrackerColors
-import com.kszalai.billtracker.models.BillType
+import com.kszalai.billtracker.bills.common.models.BillType
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*

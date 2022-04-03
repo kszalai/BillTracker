@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
 import com.kszalai.billtracker.databinding.AddBillFragmentBinding
@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddBillFragment : Fragment() {
-    private val viewModel: AddBillViewModel by viewModels()
     lateinit var binding: AddBillFragmentBinding
 
     override fun onCreateView(
@@ -38,14 +37,16 @@ class AddBillFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.root.setContent {
-            AddBillScreen(viewModel)
+            AddBillScreen()
         }
     }
 }
 
 @ExperimentalMaterialApi
 @Composable
-fun AddBillScreen(viewModel: AddBillViewModel) {
+fun AddBillScreen(
+    viewModel: AddBillViewModel = viewModel()
+) {
     val uiState by viewModel.uiState
     AddBillScreen(
         onBillNameChange = viewModel::onBillNameChange,

@@ -1,4 +1,4 @@
-package com.kszalai.billtracker.di
+package com.kszalai.billtracker.common.di
 
 import com.kszalai.billtracker.bills.common.repo.BillRepo
 import com.kszalai.billtracker.bills.common.services.BillService

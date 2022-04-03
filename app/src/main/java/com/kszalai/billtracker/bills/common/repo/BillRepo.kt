@@ -2,7 +2,7 @@ package com.kszalai.billtracker.bills.common.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.kszalai.billtracker.models.BillObject
+import com.kszalai.billtracker.bills.common.models.BillObject
 import com.kszalai.billtracker.bills.common.services.BillService
 import javax.inject.Singleton
 

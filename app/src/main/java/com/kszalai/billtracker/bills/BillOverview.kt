@@ -22,8 +22,8 @@ import com.kszalai.billtracker.common.extensions.formatToCurrency
 import com.kszalai.billtracker.common.extensions.getIcon
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
-import com.kszalai.billtracker.models.BillObject
-import com.kszalai.billtracker.models.SampleBillObjectList
+import com.kszalai.billtracker.bills.common.models.BillObject
+import com.kszalai.billtracker.bills.common.models.SampleBillObjectList
 
 @ExperimentalMaterialApi
 @Composable
@@ -101,6 +101,6 @@ fun BillOverview(
 fun PreviewBillOverview() {
     BillOverview(
         data = SampleBillObjectList.data[0],
-        onNavigate = { dest, bundle -> }
+        onNavigate = { _, _ -> }
     )
 }
