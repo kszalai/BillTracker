@@ -9,10 +9,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/activity_main.xml" value="0.3134057971014493" />
-        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/bill_detail_fragment.xml" value="0.20572916666666666" />
+        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/add_bill_fragment.xml" value="0.1890625" />
+        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/bill_detail_fragment.xml" value="0.33" />
         <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/bill_item_layout.xml" value="0.5" />
         <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/bill_list_fragment.xml" value="0.20572916666666666" />
-        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/detail_rv_credit_info.xml" value="0.3134057971014493" />
+        <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/detail_rv_credit_info.xml" value="0.5" />
         <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/detail_rv_payment_hist_header.xml" value="0.3134057971014493" />
         <entry key="..\:/kyles/Code/AndroidStudioProjects/BillTracker/app/src/main/res/layout/detail_rv_payment_hist_item.xml" value="0.3134057971014493" />
       </map>

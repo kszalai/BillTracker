@@ -7,16 +7,27 @@
 
     <fragment
         android:id="@+id/billListFragment"
-        android:name="com.kszalai.billtracker.ui.bills.BillListFragment"
+        android:name="com.kszalai.billtracker.bills.BillListFragment"
         android:label="bill_list_fragment"
         tools:layout="@layout/bill_list_fragment" >
         <action
             android:id="@+id/action_billListFragment_to_billDetailFragment"
             app:destination="@id/billDetailFragment" />
+        <action
+            android:id="@+id/action_billListFragment_to_addBillFragment"
+            app:destination="@id/addBillFragment" />
     </fragment>
     <fragment
         android:id="@+id/billDetailFragment"
-        android:name="com.kszalai.billtracker.ui.billdetails.BillDetailFragment"
+        android:name="com.kszalai.billtracker.bills.details.BillDetailFragment"
         android:label="bill_detail_fragment"
-        tools:layout="@layout/bill_detail_fragment" /><action android:id="@+id/action_global_billListFragment" app:destination="@id/billListFragment"/>
+        tools:layout="@layout/bill_detail_fragment" />
+    <action
+        android:id="@+id/action_global_billListFragment"
+        app:destination="@id/billListFragment" />
+    <fragment
+        android:id="@+id/addBillFragment"
+        android:name="com.kszalai.billtracker.bills.add.AddBillFragment"
+        android:label="AddBillFragment"
+        tools:layout="@layout/add_bill_fragment" />
 </navigation>
