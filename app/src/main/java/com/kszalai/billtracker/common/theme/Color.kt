@@ -14,8 +14,8 @@ object BillTrackerColors {
     val AccentLight = Color(0xffff5c8d)
     val TextColor: Color
         @Composable get() = if (isSystemInDarkTheme()) textColorDark else textColorLight
-    val textColorLight = Color(0xff333333)
-    val textColorDark = Color(0xffffffff)
+    val textColorLight = Color(0xFF1C1B1A)
+    val textColorDark = Color(0xFFFFFFFF)
     val FarOut: Color
         @Composable get() = if (isSystemInDarkTheme()) FarOutDark else FarOutLight
     private val FarOutLight = Color(0xff81c784)
@@ -28,6 +28,14 @@ object BillTrackerColors {
         @Composable get() = if (isSystemInDarkTheme()) PastDueDark else PastDueLight
     private val PastDueLight = Color(0xffe57373)
     private val PastDueDark = Color(0xff7f0000)
+    val Background: Color
+        @Composable get() = if (isSystemInDarkTheme()) BackgroundDark else BackgroundLight
+    val BackgroundDark = Color(0xFF121212)
+    val BackgroundLight = Color(0xFFFFFFFF)
+    val OnBackground: Color
+        @Composable get() = if (isSystemInDarkTheme()) OnBackgroundDark else OnBackgroundLight
+    val OnBackgroundDark = Color(0xFFFFFFFF)
+    val OnBackgroundLight = Color(0xFF1C1B1A)
 
 
     @Composable

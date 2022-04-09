@@ -11,6 +11,7 @@ class BillService {
         val test = ArrayList<BillObject>()
         test.add(
             BillObject(
+                id = 1,
                 billName = "Discover",
                 nextPayment = BillPayment(_amount = 129.70, paymentDate = "09/20/2021"),
                 pastDue = 0.0,
@@ -21,11 +22,22 @@ class BillService {
                 billType = BillType.CreditCard,
                 link = "",
                 pinned = false,
-                details = CreditCardLimit(3000.0, 15.69)
+                details = CreditCardLimit(3000.0, 15.69),
+                paymentHistory = listOf(
+                    BillPayment(
+                        paymentDate = "03/20/22",
+                        _amount = 200.0
+                    ),
+                    BillPayment(
+                        paymentDate = "02/20/22",
+                        _amount = 150.0
+                    )
+                )
             )
         )
         test.add(
             BillObject(
+                id = 2,
                 billName = "Rocket Mortgage",
                 nextPayment = BillPayment(_amount = 600.0, paymentDate = "08/20/2021"),
                 pastDue = 0.0,
@@ -35,11 +47,30 @@ class BillService {
                 fees = emptyArray(),
                 billType = BillType.Mortgage,
                 link = "",
-                pinned = false
+                pinned = false,
+                paymentHistory = listOf(
+                    BillPayment(
+                        paymentDate = "04/01/22",
+                        _amount = 1000.0
+                    ),
+                    BillPayment(
+                        paymentDate = "03/01/22",
+                        _amount = 1000.0
+                    ),
+                    BillPayment(
+                        paymentDate = "02/01/22",
+                        _amount = 1000.0
+                    ),
+                    BillPayment(
+                        paymentDate = "01/01/22",
+                        _amount = 1000.0
+                    )
+                )
             )
         )
         test.add(
             BillObject(
+                id = 3,
                 billName = "Ford EcoSport",
                 nextPayment = BillPayment(_amount = 350.0, paymentDate = "07/28/2021"),
                 pastDue = 0.0,
@@ -49,7 +80,17 @@ class BillService {
                 fees = emptyArray(),
                 billType = BillType.Auto,
                 link = "",
-                pinned = false
+                pinned = false,
+                paymentHistory = listOf(
+                    BillPayment(
+                        paymentDate = "03/15/22",
+                        _amount = 300.0
+                    ),
+                    BillPayment(
+                        paymentDate = "02/15/22",
+                        _amount = 300.0
+                    )
+                )
             )
         )
 

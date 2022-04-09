@@ -1,10 +1,6 @@
 package com.kszalai.billtracker.bills.add
 
 import android.content.res.Configuration
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -13,34 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
-import com.kszalai.billtracker.databinding.AddBillFragmentBinding
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class AddBillFragment : Fragment() {
-    lateinit var binding: AddBillFragmentBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = AddBillFragmentBinding.inflate(inflater)
-        return binding.root
-    }
-
-    @OptIn(ExperimentalMaterialApi::class)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.root.setContent {
-            AddBillScreen()
-        }
-    }
-}
 
 @ExperimentalMaterialApi
 @Composable
@@ -121,7 +92,7 @@ private fun AddBillScreen(
                                 text = "Bill Type",
                                 color = BillTrackerColors.TextColor
                             )
-                                },
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
                     )
@@ -152,7 +123,7 @@ private fun AddBillScreen(
                             text = "Credit Limit",
                             color = BillTrackerColors.TextColor
                         )
-                            },
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
                 )

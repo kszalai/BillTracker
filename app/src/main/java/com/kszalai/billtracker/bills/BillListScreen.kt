@@ -1,10 +1,6 @@
 package com.kszalai.billtracker.bills
 
 import android.content.res.Configuration
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,38 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
-import com.kszalai.billtracker.R
-import com.kszalai.billtracker.databinding.BillListFragmentBinding
 import com.kszalai.billtracker.bills.common.models.BillObject
 import com.kszalai.billtracker.bills.common.models.SampleBillObjectList
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class BillListFragment : Fragment() {
-    lateinit var binding: BillListFragmentBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = BillListFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    @OptIn(ExperimentalMaterialApi::class)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.billListComposeView.setContent {
-            BillListScreen(
-                navController = findNavController()
-            )
-        }
-    }
-}
 
 @ExperimentalMaterialApi
 @Composable
@@ -65,11 +33,11 @@ fun BillListScreen(
     val bills: List<BillObject> by viewModel.bills.observeAsState(listOf())
     BillListScreen(
         data = bills,
-        onBillItemNavigate = { dest, bundle ->
-            navController.navigate(dest, bundle)
+        onBillItemNavigate = { route ->
+            navController.navigate(route)
         },
-        onAddBillNavigate = { dest, bundle ->
-            navController.navigate(dest, bundle)
+        onAddBillNavigate = { route ->
+            navController.navigate(route)
         }
     )
 }
@@ -78,14 +46,15 @@ fun BillListScreen(
 @Composable
 private fun BillListScreen(
     data: List<BillObject>,
-    onBillItemNavigate: (Int, Bundle) -> Unit,
-    onAddBillNavigate: (Int, Bundle?) -> Unit
+    onBillItemNavigate: (String) -> Unit,
+    onAddBillNavigate: (String) -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         LazyColumn(
             modifier = Modifier
+                .padding(horizontal = 20.dp)
                 .fillMaxWidth()
         ) {
             items(data) { bill ->
@@ -97,7 +66,7 @@ private fun BillListScreen(
         }
         FloatingActionButton(
             onClick = {
-                onAddBillNavigate(R.id.action_billListFragment_to_addBillFragment, null)
+                onAddBillNavigate("add")
             },
             modifier = Modifier
                 .padding(all = 16.dp)
@@ -121,7 +90,7 @@ private fun BillListScreen(
 private fun PreviewBillListScreen() {
     BillListScreen(
         data = SampleBillObjectList.data,
-        onAddBillNavigate = { _, _ -> },
-        onBillItemNavigate = { _, _ -> }
+        onAddBillNavigate = { },
+        onBillItemNavigate = { }
     )
 }

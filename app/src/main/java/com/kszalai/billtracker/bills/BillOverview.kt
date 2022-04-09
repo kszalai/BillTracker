@@ -1,7 +1,6 @@
 package com.kszalai.billtracker.bills
 
 import android.content.res.Configuration
-import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -15,32 +14,27 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.os.bundleOf
-import com.kszalai.billtracker.R
+import com.kszalai.billtracker.bills.common.models.BillObject
+import com.kszalai.billtracker.bills.common.models.SampleBillObjectList
 import com.kszalai.billtracker.common.extensions.determineComposableColorFromDate
 import com.kszalai.billtracker.common.extensions.formatToCurrency
 import com.kszalai.billtracker.common.extensions.getIcon
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
-import com.kszalai.billtracker.bills.common.models.BillObject
-import com.kszalai.billtracker.bills.common.models.SampleBillObjectList
 
 @ExperimentalMaterialApi
 @Composable
 fun BillOverview(
     data: BillObject,
-    onNavigate: (Int, Bundle) -> Unit
+    onNavigate: (String) -> Unit
 ) {
     BillTrackerTheme {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 8.dp),
+                .padding(vertical = 8.dp),
             backgroundColor = data.nextPayment.paymentDate.determineComposableColorFromDate(),
-            onClick = {
-                val bundle = bundleOf("selectedBill" to data)
-                onNavigate(R.id.action_billListFragment_to_billDetailFragment, bundle)
-            }
+            onClick = { onNavigate("details/${data.id}") }
         ) {
             Column(modifier = Modifier.padding(all = 20.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -101,6 +95,6 @@ fun BillOverview(
 fun PreviewBillOverview() {
     BillOverview(
         data = SampleBillObjectList.data[0],
-        onNavigate = { _, _ -> }
+        onNavigate = { }
     )
 }

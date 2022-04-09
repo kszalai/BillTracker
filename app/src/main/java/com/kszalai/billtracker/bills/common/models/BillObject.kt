@@ -3,6 +3,7 @@ package com.kszalai.billtracker.bills.common.models
 import java.io.Serializable
 
 data class BillObject(
+    val id: Int = -1,
     val billName: String = "",
     var nextPayment: BillPayment = BillPayment(
         paymentDate = "",
@@ -25,6 +26,7 @@ data class BillObject(
 
         other as BillObject
 
+        if (id != other.id) return false
         if (billName != other.billName) return false
         if (nextPayment != other.nextPayment) return false
         if (pastDue != other.pastDue) return false
@@ -42,6 +44,7 @@ data class BillObject(
 
     override fun hashCode(): Int {
         var result = billName.hashCode()
+        result = 31 * result + id.hashCode()
         result = 31 * result + nextPayment.hashCode()
         result = 31 * result + pastDue.hashCode()
         result = 31 * result + (lastPayment?.hashCode() ?: 0)
@@ -73,6 +76,7 @@ enum class BillType {
 object SampleBillObjectList {
     val data = arrayListOf(
         BillObject(
+            id = 1,
             billName = "Discover",
             nextPayment = BillPayment(_amount = 129.70, paymentDate = "09/30/2021"),
             pastDue = 0.0,
@@ -86,6 +90,7 @@ object SampleBillObjectList {
             details = CreditCardLimit(3000.0, 15.69)
         ),
         BillObject(
+            id = 2,
             billName = "Rocket Mortgage",
             nextPayment = BillPayment(_amount = 600.0, paymentDate = "08/20/2021"),
             pastDue = 0.0,
@@ -98,6 +103,7 @@ object SampleBillObjectList {
             pinned = false
         ),
         BillObject(
+            id = 3,
             billName = "Ford EcoSport",
             nextPayment = BillPayment(_amount = 350.0, paymentDate = "07/28/2021"),
             pastDue = 0.0,
