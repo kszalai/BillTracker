@@ -33,7 +33,8 @@ class BillService {
                 nextPayment = BillPayment(_amount = 600.0, paymentDate = "08/20/2021"),
                 pastDue = 0.0,
                 lastPayment = BillPayment(_amount = 600.0, paymentDate = "07/20/2021"),
-                balance = 100000.0,
+                initialBalance = 1000000.0,
+                balance = 700000.0,
                 pinned = false,
                 paymentHistory = listOf(
                     BillPayment(
@@ -60,7 +61,8 @@ class BillService {
                 id = 3,
                 billName = "Ford EcoSport",
                 nextPayment = BillPayment(_amount = 350.0, paymentDate = "07/28/2021"),
-                pastDue = 0.0,
+                pastDue = 250.0,
+                initialBalance = 35000.0,
                 balance = 25000.0,
                 paymentHistory = listOf(
                     BillPayment(

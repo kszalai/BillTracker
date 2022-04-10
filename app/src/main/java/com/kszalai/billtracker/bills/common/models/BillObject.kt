@@ -12,6 +12,7 @@ open class BillObject(
     ),
     open var pastDue: Double = 0.0,
     open var lastPayment: BillPayment? = null,
+    open val initialBalance: Double? = null,
     open var balance: Double? = null,
     open var comments: String = "",
     open var fees: List<BillFee> = emptyList(),

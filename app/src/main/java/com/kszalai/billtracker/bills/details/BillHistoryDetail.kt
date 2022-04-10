@@ -69,6 +69,33 @@ private fun BillDetails(
                         fontSize = 32.sp
                     )
                 }
+                if (data.selectedBill.pastDue != 0.0) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Card(
+                        backgroundColor = BillTrackerColors.Error,
+                        contentColor = BillTrackerColors.OnError,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(
+                                horizontal = 15.dp,
+                                vertical = 8.dp
+                            )
+                        ) {
+                            Row {
+                                Icon(
+                                    painter = painterResource(id = data.selectedBill.billType.getIcon()),
+                                    contentDescription = "Past Due Warning Icon",
+                                )
+                                Text(
+                                    text = "Past Due! ${data.selectedBill.pastDue.formatToCurrency()}",
+                                    fontSize = 20.sp,
+                                    fontStyle = FontStyle.Italic
+                                )
+                            }
+                        }
+                    }
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(
@@ -142,6 +169,16 @@ private fun BillDetails(
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
+                data.selectedBill.balance?.let {
+                    if (it != 0.0) {
+                        Text(text = "Balance: ${data.selectedBill.balance.formatToCurrency()}")
+                    }
+                }
+                data.selectedBill.initialBalance?.let {
+                    if (it != 0.0) {
+                        Text(text = "Initial Balance: ${data.selectedBill.initialBalance.formatToCurrency()}")
+                    }
+                }
                 when (data.selectedBill) {
                     is CreditCard -> {
                         DetailCreditInfo(data = data.selectedBill.details)
