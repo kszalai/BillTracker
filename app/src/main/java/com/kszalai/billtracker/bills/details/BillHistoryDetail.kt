@@ -84,13 +84,15 @@ private fun BillDetails(
                         ) {
                             Row {
                                 Icon(
-                                    painter = painterResource(id = data.selectedBill.billType.getIcon()),
+                                    painter = painterResource(id = R.drawable.warning),
                                     contentDescription = "Past Due Warning Icon",
+                                    tint = BillTrackerColors.OnError
                                 )
                                 Text(
                                     text = "Past Due! ${data.selectedBill.pastDue.formatToCurrency()}",
                                     fontSize = 20.sp,
-                                    fontStyle = FontStyle.Italic
+                                    fontStyle = FontStyle.Italic,
+                                    modifier = Modifier.padding(start = 4.dp)
                                 )
                             }
                         }
