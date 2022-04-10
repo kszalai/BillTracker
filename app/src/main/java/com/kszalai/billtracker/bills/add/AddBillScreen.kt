@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
@@ -43,104 +44,102 @@ private fun AddBillScreen(
 ) {
     val billTypes = listOf("Credit Card", "Student Loan", "Car Loan", "Mortgage")
 
-    BillTrackerTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    vertical = 20.dp,
-                    horizontal = 16.dp
-                )
-        ) {
-            Column {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                vertical = 20.dp,
+                horizontal = 16.dp
+            )
+    ) {
+        Column {
+            Text(
+                text = "Add A New Bill",
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = data.billName,
+                onValueChange = onBillNameChange,
+                label = {
+                    Text(
+                        text = "Bill Name",
+                        color = BillTrackerColors.TextColor
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = data.apr,
+                onValueChange = onAprChange,
+                label = {
+                    Text(
+                        text = "APR",
+                        color = BillTrackerColors.TextColor
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            ExposedDropdownMenuBox(
+                expanded = data.billTypeExpanded,
+                onExpandedChange = onBillTypeExpandedChange,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 OutlinedTextField(
-                    value = data.billName,
-                    onValueChange = onBillNameChange,
+                    value = data.selectedBillType,
+                    onValueChange = {},
                     label = {
                         Text(
-                            text = "Bill Name",
+                            text = "Bill Type",
                             color = BillTrackerColors.TextColor
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = data.apr,
-                    onValueChange = onAprChange,
-                    label = {
-                        Text(
-                            text = "APR",
-                            color = BillTrackerColors.TextColor
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                ExposedDropdownMenuBox(
+                ExposedDropdownMenu(
                     expanded = data.billTypeExpanded,
-                    onExpandedChange = onBillTypeExpandedChange,
+                    onDismissRequest = { onBillTypeExpandedChange(false) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    OutlinedTextField(
-                        value = data.selectedBillType,
-                        onValueChange = {},
-                        label = {
+                    billTypes.forEach { billType ->
+                        DropdownMenuItem(
+                            onClick = { onBillTypeSelected(billType) },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
                             Text(
-                                text = "Bill Type",
+                                text = billType,
                                 color = BillTrackerColors.TextColor
                             )
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
-                    )
-                    ExposedDropdownMenu(
-                        expanded = data.billTypeExpanded,
-                        onDismissRequest = { onBillTypeExpandedChange(false) },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        billTypes.forEach { billType ->
-                            DropdownMenuItem(
-                                onClick = { onBillTypeSelected(billType) },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text(
-                                    text = billType,
-                                    color = BillTrackerColors.TextColor
-                                )
-                            }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = data.creditLimit,
-                    onValueChange = onCreditLimitChange,
-                    label = {
-                        Text(
-                            text = "Credit Limit",
-                            color = BillTrackerColors.TextColor
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
-                )
             }
-            Button(
-                onClick = onAddBill,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-            ) {
-                Row {
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = data.creditLimit,
+                onValueChange = onCreditLimitChange,
+                label = {
                     Text(
-                        text = "Add Bill",
+                        text = "Credit Limit",
                         color = BillTrackerColors.TextColor
                     )
-                }
-            }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
+            )
+        }
+        Button(
+            onClick = onAddBill,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+        ) {
+            Text(text = "Add Bill")
         }
     }
 }
@@ -153,13 +152,15 @@ private fun AddBillScreen(
 )
 @Composable
 fun PreviewAddBillScreen() {
-    AddBillScreen(
-        onAddBill = { },
-        onAprChange = { },
-        onBillNameChange = { },
-        onBillTypeExpandedChange = { },
-        onBillTypeSelected = { },
-        onCreditLimitChange = { },
-        data = AddBillUIState()
-    )
+    BillTrackerTheme {
+        AddBillScreen(
+            onAddBill = { },
+            onAprChange = { },
+            onBillNameChange = { },
+            onBillTypeExpandedChange = { },
+            onBillTypeSelected = { },
+            onCreditLimitChange = { },
+            data = AddBillUIState()
+        )
+    }
 }

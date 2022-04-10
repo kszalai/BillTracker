@@ -21,12 +21,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kszalai.billtracker.R
 import com.kszalai.billtracker.bills.common.models.BillPayment
+import com.kszalai.billtracker.bills.common.models.CreditCard
 import com.kszalai.billtracker.bills.common.models.CreditCardLimit
 import com.kszalai.billtracker.bills.common.models.SampleBillObjectList
 import com.kszalai.billtracker.common.extensions.formatToCurrency
 import com.kszalai.billtracker.common.extensions.formatToPercentage
 import com.kszalai.billtracker.common.extensions.getIcon
 import com.kszalai.billtracker.common.theme.BillTrackerColors
+import com.kszalai.billtracker.common.theme.BillTrackerTheme
 
 @Composable
 fun BillDetails(
@@ -47,11 +49,9 @@ private fun BillDetails(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 16.dp)
+            .padding(top = 16.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 20.dp)
-        ) {
+        Column(modifier = Modifier.padding(horizontal = 20.dp)) {
             if (data.loading) {
                 Text("Loading...")
             } else {
@@ -66,8 +66,7 @@ private fun BillDetails(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = data.selectedBill.billName,
-                        fontSize = 32.sp,
-                        color = BillTrackerColors.TextColor
+                        fontSize = 32.sp
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -143,8 +142,8 @@ private fun BillDetails(
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                when (data.selectedBill.details) {
-                    is CreditCardLimit -> {
+                when (data.selectedBill) {
+                    is CreditCard -> {
                         DetailCreditInfo(data = data.selectedBill.details)
                     }
                 }
@@ -210,7 +209,6 @@ private fun BillHistoryDetail(payments: List<BillPayment>) {
             Text(
                 text = "No Payment History",
                 fontSize = 16.sp,
-                color = BillTrackerColors.TextColor,
                 fontStyle = FontStyle.Italic
             )
         }
@@ -227,22 +225,19 @@ private fun DetailCreditInfo(data: CreditCardLimit) {
         Row {
             Text(
                 text = "Credit Info",
-                fontSize = 20.sp,
-                color = BillTrackerColors.TextColor
+                fontSize = 20.sp
             )
         }
         Row(modifier = Modifier.fillMaxWidth()) {
             Row {
                 Text(
                     text = "Credit Limit:",
-                    fontSize = 16.sp,
-                    color = BillTrackerColors.TextColor
+                    fontSize = 16.sp
                 )
                 Text(
-                    text = data.creditLimit.formatToCurrency(),
+                    text = data.limit.formatToCurrency(),
                     fontStyle = FontStyle.Italic,
                     fontSize = 16.sp,
-                    color = BillTrackerColors.TextColor,
                     modifier = Modifier.padding(start = 3.dp)
                 )
             }
@@ -252,14 +247,12 @@ private fun DetailCreditInfo(data: CreditCardLimit) {
             ) {
                 Text(
                     text = "APR:",
-                    fontSize = 16.sp,
-                    color = BillTrackerColors.TextColor
+                    fontSize = 16.sp
                 )
                 Text(
                     text = data.apr.formatToPercentage(),
                     fontStyle = FontStyle.Italic,
                     fontSize = 16.sp,
-                    color = BillTrackerColors.TextColor,
                     modifier = Modifier.padding(start = 3.dp)
                 )
             }
@@ -275,19 +268,13 @@ private fun DetailHistoryItem(data: BillPayment) {
             .padding(top = 8.dp, bottom = 8.dp)
     ) {
         Column(modifier = Modifier.weight(weight = 1f)) {
-            Text(
-                text = data.paymentDate,
-                color = BillTrackerColors.TextColor
-            )
+            Text(text = data.paymentDate)
         }
         Column(
             modifier = Modifier.weight(weight = 1f),
             horizontalAlignment = Alignment.End
         ) {
-            Text(
-                text = data.amount,
-                color = BillTrackerColors.TextColor
-            )
+            Text(text = data.amount)
         }
     }
 }
@@ -299,10 +286,12 @@ private fun DetailHistoryItem(data: BillPayment) {
 )
 @Composable
 private fun PreviewBillDetails() {
-    BillDetails(
-        onAddBillDetailsClick = { },
-        data = BillDetailsUIState(
-            selectedBill = SampleBillObjectList.data[0]
+    BillTrackerTheme {
+        BillDetails(
+            onAddBillDetailsClick = { },
+            data = BillDetailsUIState(
+                selectedBill = SampleBillObjectList.data[0]
+            )
         )
-    )
+    }
 }

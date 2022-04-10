@@ -43,7 +43,8 @@ private fun BillTracker() {
             topBar = {
                 TopAppBar(
                     title = { Text("Bill Tracker") },
-                    contentColor = Color.White
+                    backgroundColor = BillTrackerColors.Primary,
+                    contentColor = BillTrackerColors.OnPrimary
                 )
             },
             backgroundColor = BillTrackerColors.Background,
@@ -71,15 +72,11 @@ private fun BillTracker() {
                     val vm = hiltViewModel<BillDetailViewModel>()
                     val billId = it.arguments?.getInt("billId")
                     vm.setBill(data = billId)
-                    BillDetails(
-                        viewModel = vm
-                    )
+                    BillDetails(viewModel = vm)
                 }
                 composable("add") {
                     val vm = hiltViewModel<AddBillViewModel>()
-                    AddBillScreen(
-                        viewModel = vm
-                    )
+                    AddBillScreen(viewModel = vm)
                 }
             }
         }

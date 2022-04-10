@@ -1,30 +1,37 @@
 package com.kszalai.billtracker.common.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
 private val lightColorPalette = lightColors(
     primary = BillTrackerColors.Primary,
-    primaryVariant = BillTrackerColors.PrimaryDark,
-    secondary = BillTrackerColors.Accent,
-    secondaryVariant = BillTrackerColors.AccentDark,
-    surface = Color.LightGray,
-    onPrimary = BillTrackerColors.textColorLight,
-    onSurface = BillTrackerColors.textColorLight,
-    onBackground = BillTrackerColors.textColorLight
+    primaryVariant = BillTrackerColors.PrimaryVariantLight,
+    secondary = BillTrackerColors.Secondary,
+    secondaryVariant = BillTrackerColors.SecondaryVariantLight,
+    background = BillTrackerColors.BackgroundLight,
+    error = BillTrackerColors.ErrorLight,
+    surface = BillTrackerColors.SurfaceLight,
+    onPrimary = BillTrackerColors.OnPrimary,
+    onSurface = BillTrackerColors.OnSurfaceLight,
+    onBackground = BillTrackerColors.OnBackgroundLight,
+    onError = BillTrackerColors.OnErrorLight
 )
 
 private val darkColorPalette = darkColors(
     primary = BillTrackerColors.Primary,
-    primaryVariant = BillTrackerColors.PrimaryLight,
-    secondary = BillTrackerColors.Accent,
-    secondaryVariant = BillTrackerColors.AccentLight,
-    surface = Color.DarkGray,
-    onPrimary = BillTrackerColors.textColorDark,
-    onSurface = BillTrackerColors.textColorDark,
-    onBackground = BillTrackerColors.textColorDark
+    primaryVariant = BillTrackerColors.PrimaryVariantDark,
+    secondary = BillTrackerColors.Secondary,
+    secondaryVariant = BillTrackerColors.SecondaryVariantDark,
+    background = BillTrackerColors.BackgroundDark,
+    error = BillTrackerColors.ErrorDark,
+    surface = BillTrackerColors.SurfaceDark,
+    onPrimary = BillTrackerColors.OnPrimary,
+    onSurface = BillTrackerColors.OnSurfaceDark,
+    onBackground = BillTrackerColors.OnBackgroundDark,
+    onError = BillTrackerColors.OnErrorDark
 )
 
 @Composable

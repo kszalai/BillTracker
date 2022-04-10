@@ -33,12 +33,8 @@ fun BillListScreen(
     val bills: List<BillObject> by viewModel.bills.observeAsState(listOf())
     BillListScreen(
         data = bills,
-        onBillItemNavigate = { route ->
-            navController.navigate(route)
-        },
-        onAddBillNavigate = { route ->
-            navController.navigate(route)
-        }
+        onBillItemNavigate = { route -> navController.navigate(route) },
+        onAddBillNavigate = { route -> navController.navigate(route) }
     )
 }
 
@@ -49,9 +45,7 @@ private fun BillListScreen(
     onBillItemNavigate: (String) -> Unit,
     onAddBillNavigate: (String) -> Unit
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
                 .padding(horizontal = 20.dp)
@@ -65,9 +59,7 @@ private fun BillListScreen(
             }
         }
         FloatingActionButton(
-            onClick = {
-                onAddBillNavigate("add")
-            },
+            onClick = { onAddBillNavigate("add") },
             modifier = Modifier
                 .padding(all = 16.dp)
                 .align(Alignment.BottomEnd)
