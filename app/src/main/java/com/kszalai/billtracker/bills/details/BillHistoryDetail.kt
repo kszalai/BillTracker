@@ -185,10 +185,16 @@ private fun BillTypeDetails(data: BillObject) {
 @Composable
 private fun BillBalance(data: BillObject.BillBalance) {
     if (data._initialBalance != 0.0) {
-        Text(text = "Initial Balance: ${data.initialBalance}")
+        Text(
+            text = "Initial Balance: ${data.initialBalance}",
+            fontSize = 16.sp
+        )
     }
     if (data._balance != 0.0) {
-        Text(text = "Balance: ${data.balance}")
+        Text(
+            text = "Balance: ${data.balance}",
+            fontSize = 16.sp
+        )
     }
 }
 
