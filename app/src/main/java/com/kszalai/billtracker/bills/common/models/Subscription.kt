@@ -1,5 +1,6 @@
 package com.kszalai.billtracker.bills.common.models
 
+import com.kszalai.billtracker.common.extensions.formatToCurrency
 import java.io.Serializable
 
 data class Subscription(
@@ -10,27 +11,35 @@ data class Subscription(
         _amount = 0.0
     ),
     override var pastDue: Double = 0.0,
-    override var lastPayment: BillPayment? = null,
-    override val initialBalance: Double? = null,
-    override var balance: Double? = null,
     override var comments: String = "",
     override var fees: List<BillFee> = emptyList(),
-    override val billType: BillType = BillType.Subscription,
     override val pinned: Boolean = false,
     override val link: String = "",
-    override val paymentHistory: List<BillPayment> = emptyList()
+    override val paymentHistory: List<BillPayment> = emptyList(),
+    val details: SubscriptionDetails = SubscriptionDetails()
 ) : BillObject(
     id,
     billName,
     nextPayment,
     pastDue,
-    lastPayment,
-    initialBalance,
-    balance,
     comments,
     fees,
-    billType,
     pinned,
     link,
     paymentHistory
-), Serializable
+), Serializable {
+    data class SubscriptionDetails(
+        private val _amount: Double = 0.0,
+        val frequency: SubscriptionFrequency = SubscriptionFrequency.UNSPECIFIED,
+        val frequencyNotes: String = ""
+    ) {
+        val amount = _amount.formatToCurrency()
+
+        enum class SubscriptionFrequency {
+            WEEKLY,
+            MONTHLY,
+            YEARLY,
+            UNSPECIFIED
+        }
+    }
+}

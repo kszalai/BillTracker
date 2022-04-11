@@ -10,26 +10,19 @@ data class Mortgage(
         _amount = 0.0
     ),
     override var pastDue: Double = 0.0,
-    override var lastPayment: BillPayment? = null,
-    override val initialBalance: Double? = null,
-    override var balance: Double? = null,
     override var comments: String = "",
     override var fees: List<BillFee> = emptyList(),
-    override val billType: BillType = BillType.Mortgage,
     override val pinned: Boolean = false,
     override val link: String = "",
-    override val paymentHistory: List<BillPayment> = emptyList()
+    override val paymentHistory: List<BillPayment> = emptyList(),
+    val details: BillBalance = BillBalance()
 ) : BillObject(
     id,
     billName,
     nextPayment,
     pastDue,
-    lastPayment,
-    initialBalance,
-    balance,
     comments,
     fees,
-    billType,
     pinned,
     link,
     paymentHistory

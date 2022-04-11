@@ -10,14 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.kszalai.billtracker.bills.common.models.BillObject
-import com.kszalai.billtracker.bills.common.models.SampleBillObjectList
+import com.kszalai.billtracker.bills.common.models.*
+import com.kszalai.billtracker.common.extensions.buildPaymentString
 import com.kszalai.billtracker.common.extensions.determineComposableColorFromDate
-import com.kszalai.billtracker.common.extensions.formatToCurrency
 import com.kszalai.billtracker.common.extensions.getIcon
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
@@ -34,12 +36,13 @@ fun BillOverview(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
             backgroundColor = data.nextPayment.paymentDate.determineComposableColorFromDate(),
-            onClick = { onNavigate("details/${data.id}") }
+            onClick = { onNavigate("details/${data.id}") },
+            elevation = 4.dp
         ) {
             Column(modifier = Modifier.padding(all = 20.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = data.billType.getIcon()),
+                        painter = painterResource(id = data.getIcon()),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(16.dp))
@@ -51,37 +54,50 @@ fun BillOverview(
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = data.nextPayment.amount,
-                        fontSize = 12.sp,
-                        fontStyle = FontStyle.Italic,
-                        color = BillTrackerColors.TextColor
-                    )
-                    Text(
-                        text = " - Due On ${data.nextPayment.paymentDate}",
-                        fontSize = 12.sp,
-                        color = BillTrackerColors.TextColor
-                    )
-                }
-                data.balance?.let {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = "Balance:",
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Italic,
-                            color = BillTrackerColors.TextColor
-                        )
-                        Spacer(modifier = Modifier.width(3.dp))
-                        Text(
-                            text = data.balance.formatToCurrency(),
-                            fontSize = 12.sp,
-                            color = BillTrackerColors.TextColor
-                        )
-                    }
-                }
+                Text(
+                    text = data.buildPaymentString(),
+                    fontSize = 12.sp,
+                    color = BillTrackerColors.TextColor
+                )
+                BillAdditionalOverviewInfo(data = data)
             }
         }
+    }
+}
+
+@Composable
+private fun BillAdditionalOverviewInfo(data: BillObject) {
+    when (data) {
+        is AutoLoan -> Text(
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                    append("Balance: ")
+                }
+                append(data.details.balance)
+            },
+            fontSize = 12.sp,
+            color = BillTrackerColors.TextColor
+        )
+        is Mortgage -> Text(
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                    append("Balance: ")
+                }
+                append(data.details.balance)
+            },
+            fontSize = 12.sp,
+            color = BillTrackerColors.TextColor
+        )
+        is Subscription -> Text(
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                    append("${data.details.frequencyNotes} - ")
+                }
+                append(data.details.amount)
+            },
+            fontSize = 12.sp,
+            color = BillTrackerColors.TextColor
+        )
     }
 }
 

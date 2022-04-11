@@ -39,7 +39,7 @@ fun BillTrackerTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = if (isSystemInDarkTheme()) lightColorPalette else darkColorPalette,
+        colors = if (isSystemInDarkTheme()) darkColorPalette else lightColorPalette,
         typography = MaterialTheme.typography,
         shapes = MaterialTheme.shapes,
         content = content

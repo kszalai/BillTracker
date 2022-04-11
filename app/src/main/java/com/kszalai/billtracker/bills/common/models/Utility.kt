@@ -10,12 +10,8 @@ data class Utility(
         _amount = 0.0
     ),
     override var pastDue: Double = 0.0,
-    override var lastPayment: BillPayment? = null,
-    override val initialBalance: Double? = null,
-    override var balance: Double? = null,
     override var comments: String = "",
     override var fees: List<BillFee> = emptyList(),
-    override val billType: BillType = BillType.Utility,
     override val pinned: Boolean = false,
     override val link: String = "",
     override val paymentHistory: List<BillPayment> = emptyList()
@@ -24,12 +20,8 @@ data class Utility(
     billName,
     nextPayment,
     pastDue,
-    lastPayment,
-    initialBalance,
-    balance,
     comments,
     fees,
-    billType,
     pinned,
     link,
     paymentHistory

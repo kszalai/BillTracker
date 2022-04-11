@@ -20,10 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kszalai.billtracker.R
-import com.kszalai.billtracker.bills.common.models.BillPayment
-import com.kszalai.billtracker.bills.common.models.CreditCard
-import com.kszalai.billtracker.bills.common.models.CreditCardLimit
-import com.kszalai.billtracker.bills.common.models.SampleBillObjectList
+import com.kszalai.billtracker.bills.common.models.*
 import com.kszalai.billtracker.common.extensions.formatToCurrency
 import com.kszalai.billtracker.common.extensions.formatToPercentage
 import com.kszalai.billtracker.common.extensions.getIcon
@@ -59,7 +56,7 @@ private fun BillDetails(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(id = data.selectedBill.billType.getIcon()),
+                        painter = painterResource(id = data.selectedBill.getIcon()),
                         contentDescription = "Bill Type Icon",
                         tint = BillTrackerColors.TextColor
                     )
@@ -69,123 +66,10 @@ private fun BillDetails(
                         fontSize = 32.sp
                     )
                 }
-                if (data.selectedBill.pastDue != 0.0) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Card(
-                        backgroundColor = BillTrackerColors.Error,
-                        contentColor = BillTrackerColors.OnError,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(
-                                horizontal = 15.dp,
-                                vertical = 8.dp
-                            )
-                        ) {
-                            Row {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.warning),
-                                    contentDescription = "Past Due Warning Icon",
-                                    tint = BillTrackerColors.OnError
-                                )
-                                Text(
-                                    text = "Past Due! ${data.selectedBill.pastDue.formatToCurrency()}",
-                                    fontSize = 20.sp,
-                                    fontStyle = FontStyle.Italic,
-                                    modifier = Modifier.padding(start = 4.dp)
-                                )
-                            }
-                        }
-                    }
-                }
+                BillTypeDetails(data = data.selectedBill)
+                BillPayment(data = data.selectedBill)
+                PastDue(pastDue = data.selectedBill.pastDue)
                 Spacer(modifier = Modifier.height(8.dp))
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Column(
-                        modifier = Modifier.padding(
-                            horizontal = 15.dp,
-                            vertical = 8.dp
-                        )
-                    ) {
-                        Row {
-                            Text(
-                                text = stringResource(id = R.string.amountDue),
-                                fontSize = 20.sp
-                            )
-                            Spacer(modifier = Modifier.width(3.dp))
-                            Text(
-                                text = data.selectedBill.nextPayment.amount,
-                                fontSize = 20.sp,
-                                fontStyle = FontStyle.Italic
-                            )
-                        }
-                        Row {
-                            Text(
-                                text = stringResource(id = R.string.dueOn),
-                                fontSize = 20.sp
-                            )
-                            Spacer(modifier = Modifier.width(3.dp))
-                            Text(
-                                text = data.selectedBill.nextPayment.paymentDate,
-                                fontSize = 20.sp,
-                                fontStyle = FontStyle.Italic
-                            )
-                        }
-                    }
-                }
-                data.selectedBill.lastPayment?.let {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Card(modifier = Modifier.fillMaxWidth()) {
-                        Column(
-                            modifier = Modifier.padding(
-                                horizontal = 15.dp,
-                                vertical = 8.dp
-                            )
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.lastPayment),
-                                fontStyle = FontStyle.Italic
-                            )
-                            Row {
-                                Text(
-                                    text = stringResource(id = R.string.amountDue),
-                                    fontSize = 20.sp
-                                )
-                                Spacer(modifier = Modifier.width(3.dp))
-                                Text(
-                                    text = it.amount,
-                                    fontSize = 20.sp
-                                )
-                            }
-                            Row {
-                                Text(
-                                    text = stringResource(id = R.string.dueOn),
-                                    fontSize = 20.sp
-                                )
-                                Spacer(modifier = Modifier.width(3.dp))
-                                Text(
-                                    text = it.paymentDate,
-                                    fontSize = 20.sp
-                                )
-                            }
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                data.selectedBill.balance?.let {
-                    if (it != 0.0) {
-                        Text(text = "Balance: ${data.selectedBill.balance.formatToCurrency()}")
-                    }
-                }
-                data.selectedBill.initialBalance?.let {
-                    if (it != 0.0) {
-                        Text(text = "Initial Balance: ${data.selectedBill.initialBalance.formatToCurrency()}")
-                    }
-                }
-                when (data.selectedBill) {
-                    is CreditCard -> {
-                        DetailCreditInfo(data = data.selectedBill.details)
-                    }
-                }
                 BillHistoryDetail(
                     payments = data.selectedBill.paymentHistory
                 )
@@ -206,7 +90,135 @@ private fun BillDetails(
 }
 
 @Composable
-private fun BillHistoryDetail(payments: List<BillPayment>) {
+private fun BillPayment(data: BillObject) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = 4.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(
+                horizontal = 15.dp,
+                vertical = 8.dp
+            )
+        ) {
+            Row {
+                Text(
+                    text = stringResource(id = R.string.amountDue),
+                    fontSize = 20.sp
+                )
+                Spacer(modifier = Modifier.width(3.dp))
+                Text(
+                    text = data.calculatePayment(),
+                    fontSize = 20.sp,
+                    fontStyle = FontStyle.Italic
+                )
+            }
+            Row {
+                Text(
+                    text = stringResource(id = R.string.dueOn),
+                    fontSize = 20.sp
+                )
+                Spacer(modifier = Modifier.width(3.dp))
+                Text(
+                    text = data.nextPayment.paymentDate,
+                    fontSize = 20.sp,
+                    fontStyle = FontStyle.Italic
+                )
+            }
+            if (data.pastDue != 0.0) {
+                Text(
+                    text = "Original Amount: ${data.nextPayment.amount}",
+                    fontSize = 13.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PastDue(pastDue: Double) {
+    if (pastDue != 0.0) {
+        Spacer(modifier = Modifier.height(8.dp))
+        Card(
+            backgroundColor = BillTrackerColors.Error,
+            contentColor = BillTrackerColors.OnError,
+            elevation = 4.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = 15.dp,
+                    vertical = 8.dp
+                )
+            ) {
+                Row {
+                    Icon(
+                        painter = painterResource(id = R.drawable.warning),
+                        contentDescription = "Past Due Warning Icon",
+                        tint = BillTrackerColors.OnError
+                    )
+                    Text(
+                        text = "Past Due! ${pastDue.formatToCurrency()}",
+                        fontSize = 20.sp,
+                        fontStyle = FontStyle.Italic,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BillTypeDetails(data: BillObject) {
+    Spacer(modifier = Modifier.height(8.dp))
+    when (data) {
+        is AutoLoan -> BillBalance(data = data.details)
+        is CreditCard -> DetailCreditInfo(data = data.details)
+        is Mortgage -> BillBalance(data = data.details)
+        is Subscription -> SubscriptionDetails(data = data.details)
+    }
+    Spacer(modifier = Modifier.height(8.dp))
+}
+
+@Composable
+private fun BillBalance(data: BillObject.BillBalance) {
+    if (data._initialBalance != 0.0) {
+        Text(text = "Initial Balance: ${data.initialBalance}")
+    }
+    if (data._balance != 0.0) {
+        Text(text = "Balance: ${data.balance}")
+    }
+}
+
+@Composable
+private fun SubscriptionDetails(data: Subscription.SubscriptionDetails) {
+    Column {
+        Text(
+            text = "Subscription Details",
+            fontSize = 16.sp
+        )
+        if (data.frequency != Subscription.SubscriptionDetails.SubscriptionFrequency.UNSPECIFIED) {
+            Text(
+                text = when (data.frequency) {
+                    Subscription.SubscriptionDetails.SubscriptionFrequency.WEEKLY -> "Weekly"
+                    Subscription.SubscriptionDetails.SubscriptionFrequency.MONTHLY -> "Monthly"
+                    Subscription.SubscriptionDetails.SubscriptionFrequency.YEARLY -> "Yearly"
+                    else -> ""
+                },
+                fontSize = 14.sp,
+                fontStyle = FontStyle.Italic
+            )
+        }
+        Text(
+            text = "Amount: ${data.amount}",
+            fontSize = 14.sp
+        )
+    }
+}
+
+@Composable
+private fun BillHistoryDetail(payments: List<BillObject.BillPayment>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -255,12 +267,8 @@ private fun BillHistoryDetail(payments: List<BillPayment>) {
 }
 
 @Composable
-private fun DetailCreditInfo(data: CreditCardLimit) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp)
-    ) {
+private fun DetailCreditInfo(data: CreditCard.CreditCardLimit) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Row {
             Text(
                 text = "Credit Info",
@@ -300,7 +308,7 @@ private fun DetailCreditInfo(data: CreditCardLimit) {
 }
 
 @Composable
-private fun DetailHistoryItem(data: BillPayment) {
+private fun DetailHistoryItem(data: BillObject.BillPayment) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

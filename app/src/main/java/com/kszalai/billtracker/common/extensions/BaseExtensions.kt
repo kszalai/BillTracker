@@ -4,9 +4,14 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.withStyle
 import com.kszalai.billtracker.R
+import com.kszalai.billtracker.bills.common.models.*
 import com.kszalai.billtracker.common.theme.BillTrackerColors
-import com.kszalai.billtracker.bills.common.models.BillType
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,13 +64,23 @@ fun String.determineComposableColorFromDate(): Color {
     }
 }
 
-fun BillType.getIcon(): Int {
+fun BillObject.getIcon(): Int {
     return when (this) {
-        BillType.CreditCard -> R.drawable.credit_card_icon
-        BillType.Mortgage -> R.drawable.mortgage_icon
-        BillType.Subscription -> R.drawable.subscription_icon
-        BillType.Utility -> R.drawable.bill_icon
-        BillType.Auto -> R.drawable.auto_icon
-        BillType.Unspecified -> R.drawable.bill_icon
+        is CreditCard -> R.drawable.credit_card_icon
+        is Mortgage -> R.drawable.mortgage_icon
+        is Subscription -> R.drawable.subscription_icon
+        is Utility -> R.drawable.bill_icon
+        is AutoLoan -> R.drawable.auto_icon
+        else -> R.drawable.bill_icon
+    }
+}
+
+@Composable
+fun BillObject.buildPaymentString(): AnnotatedString {
+    return buildAnnotatedString {
+        withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+            append(this@buildPaymentString.nextPayment.amount)
+        }
+        append(" - Due On ${this@buildPaymentString.nextPayment.paymentDate}")
     }
 }
