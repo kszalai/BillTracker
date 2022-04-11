@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -196,24 +197,29 @@ private fun SubscriptionDetails(data: Subscription.SubscriptionDetails) {
     Column {
         Text(
             text = "Subscription Details",
-            fontSize = 16.sp
+            fontSize = 20.sp
         )
-        if (data.frequency != Subscription.SubscriptionDetails.SubscriptionFrequency.UNSPECIFIED) {
+        Row(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = when (data.frequency) {
-                    Subscription.SubscriptionDetails.SubscriptionFrequency.WEEKLY -> "Weekly"
-                    Subscription.SubscriptionDetails.SubscriptionFrequency.MONTHLY -> "Monthly"
-                    Subscription.SubscriptionDetails.SubscriptionFrequency.YEARLY -> "Yearly"
-                    else -> ""
-                },
-                fontSize = 14.sp,
-                fontStyle = FontStyle.Italic
+                text = "Amount: ${data.amount}",
+                fontSize = 16.sp,
+                modifier = Modifier.weight(1f)
             )
+            if (data.frequency != Subscription.SubscriptionDetails.SubscriptionFrequency.UNSPECIFIED) {
+                Text(
+                    text = when (data.frequency) {
+                        Subscription.SubscriptionDetails.SubscriptionFrequency.WEEKLY -> "Weekly"
+                        Subscription.SubscriptionDetails.SubscriptionFrequency.MONTHLY -> "Monthly"
+                        Subscription.SubscriptionDetails.SubscriptionFrequency.YEARLY -> "Yearly"
+                        else -> ""
+                    },
+                    fontSize = 16.sp,
+                    fontStyle = FontStyle.Italic,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.End
+                )
+            }
         }
-        Text(
-            text = "Amount: ${data.amount}",
-            fontSize = 14.sp
-        )
     }
 }
 
