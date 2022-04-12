@@ -98,7 +98,7 @@ private fun BillPayment(data: BillObject) {
     ) {
         Column(
             modifier = Modifier.padding(
-                horizontal = 15.dp,
+                horizontal = 16.dp,
                 vertical = 8.dp
             )
         ) {
@@ -231,49 +231,63 @@ private fun SubscriptionDetails(data: Subscription.SubscriptionDetails) {
 
 @Composable
 private fun BillHistoryDetail(payments: List<BillObject.BillPayment>) {
-    Column(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp)
+            .padding(
+                top = 8.dp,
+                bottom = 16.dp
+            ),
+        elevation = 4.dp
     ) {
-        if (payments.isNotEmpty()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 8.dp
+                )
+        ) {
             Text(
                 text = "Payment History",
                 fontSize = 24.sp,
                 color = BillTrackerColors.TextColor
             )
-            Row(modifier = Modifier.padding(top = 8.dp)) {
-                Column(modifier = Modifier.weight(weight = 1f)) {
-                    Text(
-                        text = "Payment Date",
-                        fontSize = 16.sp,
-                        color = BillTrackerColors.TextColor
-                    )
-                }
-                Column(
-                    modifier = Modifier.weight(weight = 1f),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    Text(
-                        text = "Amount",
-                        fontSize = 16.sp,
-                        color = BillTrackerColors.TextColor
-                    )
-                }
-            }
-            Row {
-                LazyColumn {
-                    items(payments) { info ->
-                        DetailHistoryItem(data = info)
+            Spacer(modifier = Modifier.height(8.dp))
+            if (payments.isNotEmpty()) {
+                Row {
+                    Column(modifier = Modifier.weight(weight = 1f)) {
+                        Text(
+                            text = "Payment Date",
+                            fontSize = 16.sp,
+                            color = BillTrackerColors.TextColor
+                        )
+                    }
+                    Column(
+                        modifier = Modifier.weight(weight = 1f),
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        Text(
+                            text = "Amount",
+                            fontSize = 16.sp,
+                            color = BillTrackerColors.TextColor
+                        )
                     }
                 }
+                Row {
+                    LazyColumn {
+                        items(payments) { info ->
+                            DetailHistoryItem(data = info)
+                        }
+                    }
+                }
+            } else {
+                Text(
+                    text = "No Payment History",
+                    fontSize = 16.sp,
+                    fontStyle = FontStyle.Italic
+                )
             }
-        } else {
-            Text(
-                text = "No Payment History",
-                fontSize = 16.sp,
-                fontStyle = FontStyle.Italic
-            )
         }
     }
 }
