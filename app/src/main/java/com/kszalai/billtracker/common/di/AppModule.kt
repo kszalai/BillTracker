@@ -1,7 +1,7 @@
 package com.kszalai.billtracker.common.di
 
 import com.kszalai.billtracker.bills.common.repo.BillRepo
-import com.kszalai.billtracker.bills.common.services.BillService
+import com.kszalai.billtracker.bills.common.dataSource.BillDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideBillRepo(): BillRepo {
-        return BillRepo(BillService())
+        return BillRepo(BillDataSource())
     }
 
 }

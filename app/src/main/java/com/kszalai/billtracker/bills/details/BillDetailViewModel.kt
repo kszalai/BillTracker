@@ -7,7 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class BillDetailViewModel @Inject constructor(val billRepo: BillRepo) : ViewModel() {
+class BillDetailViewModel @Inject constructor(
+    private val billRepo: BillRepo
+) : ViewModel() {
     var uiState = mutableStateOf(BillDetailsUIState(loading = true))
 
     fun setBill(data: Int?) {

@@ -1,8 +1,8 @@
-package com.kszalai.billtracker.bills.common.services
+package com.kszalai.billtracker.bills.common.dataSource
 
 import com.kszalai.billtracker.bills.common.models.*
 
-class BillService {
+class BillDataSource {
 
     fun getBills(): List<BillObject> {
         return ArrayList<BillObject>().apply {
@@ -107,6 +107,10 @@ class BillService {
                 )
             )
         }.toList()
+    }
+
+    fun addBill() {
+
     }
 
 }
