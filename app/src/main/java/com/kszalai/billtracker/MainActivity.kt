@@ -5,8 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -50,35 +51,45 @@ private fun BillTracker() {
             backgroundColor = BillTrackerColors.Background,
             contentColor = BillTrackerColors.OnBackground
         ) {
-            NavHost(
-                navController = navController,
-                startDestination = "overview",
-            ) {
-                composable("overview") {
-                    val vm = hiltViewModel<BillListViewModel>()
-                    BillListScreen(
-                        viewModel = vm,
-                        navController = navController
-                    )
+            BillTrackerNavHost(navController = navController)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun BillTrackerNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    NavHost(
+        navController = navController,
+        startDestination = "overview",
+        modifier = modifier
+    ) {
+        composable("overview") {
+            val vm = hiltViewModel<BillListViewModel>()
+            BillListScreen(
+                viewModel = vm,
+                navController = navController
+            )
+        }
+        composable(
+            route = "details/{billId}",
+            arguments = listOf(
+                navArgument("billId") {
+                    type = NavType.IntType
                 }
-                composable(
-                    route = "details/{billId}",
-                    arguments = listOf(
-                        navArgument("billId") {
-                            type = NavType.IntType
-                        }
-                    )
-                ) {
-                    val vm = hiltViewModel<BillDetailViewModel>()
-                    val billId = it.arguments?.getInt("billId")
-                    vm.setBill(data = billId)
-                    BillDetails(viewModel = vm)
-                }
-                composable("add") {
-                    val vm = hiltViewModel<AddBillViewModel>()
-                    AddBillScreen(viewModel = vm)
-                }
-            }
+            )
+        ) {
+            val vm = hiltViewModel<BillDetailViewModel>()
+            val billId = it.arguments?.getInt("billId")
+            vm.setBill(data = billId)
+            BillDetails(viewModel = vm)
+        }
+        composable("add") {
+            val vm = hiltViewModel<AddBillViewModel>()
+            AddBillScreen(viewModel = vm)
         }
     }
 }
