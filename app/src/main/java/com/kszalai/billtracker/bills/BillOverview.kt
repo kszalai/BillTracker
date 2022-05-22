@@ -68,7 +68,7 @@ fun BillOverview(
 @Composable
 private fun BillAdditionalOverviewInfo(data: BillObject) {
     when (data) {
-        is AutoLoan -> Text(
+        is BillObject.AutoLoan -> Text(
             text = buildAnnotatedString {
                 withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
                     append("Balance: ")
@@ -78,7 +78,7 @@ private fun BillAdditionalOverviewInfo(data: BillObject) {
             fontSize = 12.sp,
             color = BillTrackerColors.TextColor
         )
-        is Mortgage -> Text(
+        is BillObject.Mortgage -> Text(
             text = buildAnnotatedString {
                 withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
                     append("Balance: ")
@@ -88,7 +88,7 @@ private fun BillAdditionalOverviewInfo(data: BillObject) {
             fontSize = 12.sp,
             color = BillTrackerColors.TextColor
         )
-        is Subscription -> Text(
+        is BillObject.Subscription -> Text(
             text = buildAnnotatedString {
                 withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
                     append("${data.details.frequencyNotes} - ")

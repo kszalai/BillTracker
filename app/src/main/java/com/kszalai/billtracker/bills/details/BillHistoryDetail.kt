@@ -174,10 +174,10 @@ private fun PastDue(pastDue: Double) {
 private fun BillTypeDetails(data: BillObject) {
     Spacer(modifier = Modifier.height(8.dp))
     when (data) {
-        is AutoLoan -> BillBalance(data = data.details)
-        is CreditCard -> DetailCreditInfo(data = data.details)
-        is Mortgage -> BillBalance(data = data.details)
-        is Subscription -> SubscriptionDetails(data = data.details)
+        is BillObject.AutoLoan -> BillBalance(data = data.details)
+        is BillObject.CreditCard -> DetailCreditInfo(data = data.details)
+        is BillObject.Mortgage -> BillBalance(data = data.details)
+        is BillObject.Subscription -> SubscriptionDetails(data = data.details)
     }
     Spacer(modifier = Modifier.height(8.dp))
 }
@@ -199,7 +199,7 @@ private fun BillBalance(data: BillObject.BillBalance) {
 }
 
 @Composable
-private fun SubscriptionDetails(data: Subscription.SubscriptionDetails) {
+private fun SubscriptionDetails(data: BillObject.Subscription.SubscriptionDetails) {
     Column {
         Text(
             text = "Subscription Details",
@@ -211,12 +211,12 @@ private fun SubscriptionDetails(data: Subscription.SubscriptionDetails) {
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f)
             )
-            if (data.frequency != Subscription.SubscriptionDetails.SubscriptionFrequency.UNSPECIFIED) {
+            if (data.frequency != BillObject.Subscription.SubscriptionDetails.SubscriptionFrequency.UNSPECIFIED) {
                 Text(
                     text = when (data.frequency) {
-                        Subscription.SubscriptionDetails.SubscriptionFrequency.WEEKLY -> "Weekly"
-                        Subscription.SubscriptionDetails.SubscriptionFrequency.MONTHLY -> "Monthly"
-                        Subscription.SubscriptionDetails.SubscriptionFrequency.YEARLY -> "Yearly"
+                        BillObject.Subscription.SubscriptionDetails.SubscriptionFrequency.WEEKLY -> "Weekly"
+                        BillObject.Subscription.SubscriptionDetails.SubscriptionFrequency.MONTHLY -> "Monthly"
+                        BillObject.Subscription.SubscriptionDetails.SubscriptionFrequency.YEARLY -> "Yearly"
                         else -> ""
                     },
                     fontSize = 16.sp,
@@ -293,7 +293,7 @@ private fun BillHistoryDetail(payments: List<BillObject.BillPayment>) {
 }
 
 @Composable
-private fun DetailCreditInfo(data: CreditCard.CreditCardLimit) {
+private fun DetailCreditInfo(data: BillObject.CreditCard.CreditCardLimit) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row {
             Text(

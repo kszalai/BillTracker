@@ -66,11 +66,11 @@ fun String.determineComposableColorFromDate(): Color {
 
 fun BillObject.getIcon(): Int {
     return when (this) {
-        is CreditCard -> R.drawable.credit_card_icon
-        is Mortgage -> R.drawable.mortgage_icon
-        is Subscription -> R.drawable.subscription_icon
-        is Utility -> R.drawable.bill_icon
-        is AutoLoan -> R.drawable.auto_icon
+        is BillObject.CreditCard -> R.drawable.credit_card_icon
+        is BillObject.Mortgage -> R.drawable.mortgage_icon
+        is BillObject.Subscription -> R.drawable.subscription_icon
+        is BillObject.Utility -> R.drawable.bill_icon
+        is BillObject.AutoLoan -> R.drawable.auto_icon
         else -> R.drawable.bill_icon
     }
 }

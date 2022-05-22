@@ -2,8 +2,11 @@ package com.kszalai.billtracker.bills.add
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.kszalai.billtracker.bills.common.models.BillObject
 import com.kszalai.billtracker.bills.common.repo.BillRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,6 +49,12 @@ class AddBillViewModel @Inject constructor(
     }
 
     fun onAddBill() {
-
+        viewModelScope.launch {
+            billRepo.addBill(
+                BillObject.Builder()
+                    .fromUIState(uiState.value)
+                    .build()
+            )
+        }
     }
 }

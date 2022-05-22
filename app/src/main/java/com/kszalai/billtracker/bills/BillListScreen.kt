@@ -14,8 +14,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +31,7 @@ fun BillListScreen(
     viewModel: BillListViewModel = viewModel(),
     navController: NavController
 ) {
-    val bills: List<BillObject> by viewModel.bills.observeAsState(listOf())
+    val bills: List<BillObject> by viewModel.bills.collectAsState(listOf())
     BillListScreen(
         data = bills,
         onBillItemNavigate = { route -> navController.navigate(route) },

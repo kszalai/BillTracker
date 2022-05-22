@@ -1,9 +1,12 @@
 package com.kszalai.billtracker.bills.add
 
 data class AddBillUIState(
-    var billName: String = "",
-    var apr: String = "",
-    var billTypeExpanded: Boolean = false,
-    var selectedBillType: String = "",
-    var creditLimit: String = ""
+    val billName: String = "",
+    val apr: String = "",
+    val billTypeExpanded: Boolean = false,
+    val selectedBillType: String = "",
+    val creditLimit: String = "",
+    val pastDue: String = "",
+    val comment: String = "",
+    val link: String = ""
 )
