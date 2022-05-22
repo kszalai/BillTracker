@@ -72,9 +72,9 @@ private fun BillDetails(
                             fontSize = 32.sp
                         )
                     }
-                    if (data.selectedBill.autoPay) {
+                    data.selectedBill.autoPay?.let {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_autopay),
+                            painter = painterResource(id = R.drawable.autopay_icon),
                             contentDescription = "Auto Pay enabled icon",
                             tint = BillTrackerColors.TextColor,
                             modifier = Modifier.height(30.dp)
@@ -186,7 +186,7 @@ private fun PastDue(pastDue: Double) {
 
 @Composable
 private fun BillTypeDetails(data: BillObject) {
-    Column {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(8.dp))
         when (data) {
             is BillObject.AutoLoan -> BillBalance(data = data.details)
@@ -195,11 +195,16 @@ private fun BillTypeDetails(data: BillObject) {
             is BillObject.Subscription -> SubscriptionDetails(data = data.details)
         }
         Spacer(modifier = Modifier.height(8.dp))
-        if (data.autoPay) {
-            Row {
+        data.autoPay?.let {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Auto Pay Enabled")
-                if (data.autoPayDiscount != 0.0) {
-                    Text(text = " - Discount ${data.autoPayDiscount.formatToCurrency()}")
+                Row {
+                    if (it.paymentDate.isNotEmpty()) {
+                        Text(text = it.paymentDate)
+                    }
+                    if (it.discount != 0.0) {
+                        Text(text = " - Discount ${it.discount.formatToCurrency()}")
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))

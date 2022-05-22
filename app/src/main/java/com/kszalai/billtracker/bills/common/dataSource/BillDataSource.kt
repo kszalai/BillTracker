@@ -115,8 +115,10 @@ class BillDataSource {
                     _amount = 49.99,
                     paymentDate = "06/11/2022"
                 ),
-                autoPay = true,
-                autoPayDiscount = 5.0
+                autoPay = BillObject.AutoPay(
+                    discount = 5.0,
+                    paymentDate = "Every 1st of the month"
+                )
             )
         )
     }

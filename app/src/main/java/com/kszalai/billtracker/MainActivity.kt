@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun BillTracker() {
     val navController = rememberNavController()

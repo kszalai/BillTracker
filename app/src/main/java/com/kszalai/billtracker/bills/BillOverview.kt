@@ -43,9 +43,10 @@ fun BillOverview(
         ) {
             Column(modifier = Modifier.padding(all = 20.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
+                    Icon(
                         painter = painterResource(id = data.getIcon()),
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = BillTrackerColors.TextColor
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(
@@ -66,9 +67,9 @@ fun BillOverview(
                         fontSize = 12.sp,
                         color = BillTrackerColors.TextColor
                     )
-                    if (data.autoPay) {
+                    data.autoPay?.let {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_autopay),
+                            painter = painterResource(id = R.drawable.autopay_icon),
                             contentDescription = null,
                             tint = BillTrackerColors.OnBackground,
                             modifier = Modifier.height(15.dp)

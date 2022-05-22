@@ -71,19 +71,6 @@ private fun AddBillScreen(
                 colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
             )
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = data.apr,
-                onValueChange = onAprChange,
-                label = {
-                    Text(
-                        text = "APR",
-                        color = BillTrackerColors.TextColor
-                    )
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
-            )
-            Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
                 expanded = data.billTypeExpanded,
                 onExpandedChange = onBillTypeExpandedChange,
@@ -119,6 +106,19 @@ private fun AddBillScreen(
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = data.apr,
+                onValueChange = onAprChange,
+                label = {
+                    Text(
+                        text = "APR",
+                        color = BillTrackerColors.TextColor
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = BillTrackerColors.billTrackerOutlinedTextFieldColors()
+            )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = data.creditLimit,
