@@ -8,5 +8,7 @@ data class AddBillUIState(
     val creditLimit: String = "",
     val pastDue: String = "",
     val comment: String = "",
-    val link: String = ""
+    val link: String = "",
+    val autoPay: Boolean = false,
+    val autoPayDiscount: String = ""
 )

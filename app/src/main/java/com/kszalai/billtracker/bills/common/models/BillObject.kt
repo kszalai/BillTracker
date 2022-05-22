@@ -16,10 +16,12 @@ sealed class BillObject(
     open var fees: List<BillFee> = emptyList(),
     open val pinned: Boolean = false,
     open val link: String = "",
-    open val paymentHistory: List<BillPayment> = emptyList()
+    open val paymentHistory: List<BillPayment> = emptyList(),
+    open val autoPay: Boolean = false,
+    open val autoPayDiscount: Double = 0.0
 ) : Serializable {
     fun calculatePayment(): String {
-        return (nextPayment._amount + pastDue).formatToCurrency()
+        return (nextPayment._amount + pastDue - autoPayDiscount).formatToCurrency()
     }
 
     data class BillFee(
@@ -53,6 +55,8 @@ sealed class BillObject(
         var billBalance: BillBalance? = null,
         var creditCardLimit: CreditCard.CreditCardLimit? = null,
         var subscriptionDetails: Subscription.SubscriptionDetails? = null,
+        var autoPay: Boolean? = null,
+        var autoPayDiscount: Double? = null,
         var type: String? = null
     ) {
         fun billName(billName: String) = apply { this.billName = billName }
@@ -64,6 +68,8 @@ sealed class BillObject(
         fun billBalance(billBalance: BillBalance) = apply { this.billBalance = billBalance }
         fun creditCardLimit(creditCardLimit: CreditCard.CreditCardLimit) = apply { this.creditCardLimit = creditCardLimit }
         fun subscriptionDetails(subscriptionDetails: Subscription.SubscriptionDetails) = apply { this.subscriptionDetails = subscriptionDetails }
+        fun autoPay(autoPay: Boolean) = apply { this.autoPay = autoPay }
+        fun autoPayDiscount(autoPayDiscount: Double) = apply { this.autoPayDiscount = autoPayDiscount }
         fun type(type: String) = apply { this.type = type }
         fun fromUIState(state: AddBillUIState) = apply {
             this.type = state.selectedBillType
@@ -96,6 +102,8 @@ sealed class BillObject(
                     comments = this.comments ?: "",
                     fees = this.fees ?: emptyList(),
                     link = this.link ?: "",
+                    autoPay = this.autoPay ?: false,
+                    autoPayDiscount = this.autoPayDiscount ?: 0.0,
                     details = this.billBalance ?: BillBalance()
                 )
                 "credit card" -> CreditCard(
@@ -107,6 +115,8 @@ sealed class BillObject(
                     comments = this.comments ?: "",
                     fees = this.fees ?: emptyList(),
                     link = this.link ?: "",
+                    autoPay = this.autoPay ?: false,
+                    autoPayDiscount = this.autoPayDiscount ?: 0.0,
                     details = this.creditCardLimit ?: CreditCard.CreditCardLimit(
                         limit = 0.0,
                         apr = 0.0
@@ -121,6 +131,8 @@ sealed class BillObject(
                     comments = this.comments ?: "",
                     fees = this.fees ?: emptyList(),
                     link = this.link ?: "",
+                    autoPay = this.autoPay ?: false,
+                    autoPayDiscount = this.autoPayDiscount ?: 0.0,
                     details = this.billBalance ?: BillBalance()
                 )
                 "subscription" -> Subscription(
@@ -132,6 +144,8 @@ sealed class BillObject(
                     comments = this.comments ?: "",
                     fees = this.fees ?: emptyList(),
                     link = this.link ?: "",
+                    autoPay = this.autoPay ?: false,
+                    autoPayDiscount = this.autoPayDiscount ?: 0.0,
                     details = this.subscriptionDetails ?: Subscription.SubscriptionDetails()
                 )
                 "utility" -> Utility(
@@ -142,7 +156,9 @@ sealed class BillObject(
                     ),
                     comments = this.comments ?: "",
                     fees = this.fees ?: emptyList(),
-                    link = this.link ?: ""
+                    link = this.link ?: "",
+                    autoPay = this.autoPay ?: false,
+                    autoPayDiscount = this.autoPayDiscount ?: 0.0
                 )
                 else -> Generic(
                     billName = this.billName ?: "",
@@ -152,7 +168,9 @@ sealed class BillObject(
                     ),
                     comments = this.comments ?: "",
                     fees = this.fees ?: emptyList(),
-                    link = this.link ?: ""
+                    link = this.link ?: "",
+                    autoPay = this.autoPay ?: false,
+                    autoPayDiscount = this.autoPayDiscount ?: 0.0
                 )
             }
         }
@@ -170,7 +188,9 @@ sealed class BillObject(
         override var fees: List<BillFee> = emptyList(),
         override val pinned: Boolean = false,
         override val link: String = "",
-        override val paymentHistory: List<BillPayment> = emptyList()
+        override val paymentHistory: List<BillPayment> = emptyList(),
+        override val autoPay: Boolean = false,
+        override val autoPayDiscount: Double = 0.0
     ) : BillObject(
         id,
         billName,
@@ -180,7 +200,9 @@ sealed class BillObject(
         fees,
         pinned,
         link,
-        paymentHistory
+        paymentHistory,
+        autoPay,
+        autoPayDiscount
     )
 
     data class AutoLoan(
@@ -196,6 +218,8 @@ sealed class BillObject(
         override val pinned: Boolean = false,
         override val link: String = "",
         override val paymentHistory: List<BillPayment> = emptyList(),
+        override val autoPay: Boolean = false,
+        override val autoPayDiscount: Double = 0.0,
         val details: BillBalance = BillBalance()
     ) : BillObject(
         id,
@@ -206,7 +230,9 @@ sealed class BillObject(
         fees,
         pinned,
         link,
-        paymentHistory
+        paymentHistory,
+        autoPay,
+        autoPayDiscount
     ), Serializable
 
     data class CreditCard(
@@ -222,6 +248,8 @@ sealed class BillObject(
         override val pinned: Boolean = false,
         override val link: String = "",
         override val paymentHistory: List<BillPayment> = emptyList(),
+        override val autoPay: Boolean = false,
+        override val autoPayDiscount: Double = 0.0,
         val details: CreditCardLimit = CreditCardLimit(
             limit = 0.0,
             apr = 0.0
@@ -235,7 +263,9 @@ sealed class BillObject(
         fees,
         pinned,
         link,
-        paymentHistory
+        paymentHistory,
+        autoPay,
+        autoPayDiscount
     ), Serializable {
         data class CreditCardLimit(
             val limit: Double,
@@ -256,6 +286,8 @@ sealed class BillObject(
         override val pinned: Boolean = false,
         override val link: String = "",
         override val paymentHistory: List<BillPayment> = emptyList(),
+        override val autoPay: Boolean = false,
+        override val autoPayDiscount: Double = 0.0,
         val details: BillBalance = BillBalance()
     ) : BillObject(
         id,
@@ -266,7 +298,9 @@ sealed class BillObject(
         fees,
         pinned,
         link,
-        paymentHistory
+        paymentHistory,
+        autoPay,
+        autoPayDiscount
     ), Serializable
 
     data class Subscription(
@@ -282,6 +316,8 @@ sealed class BillObject(
         override val pinned: Boolean = false,
         override val link: String = "",
         override val paymentHistory: List<BillPayment> = emptyList(),
+        override val autoPay: Boolean = false,
+        override val autoPayDiscount: Double = 0.0,
         val details: SubscriptionDetails = SubscriptionDetails()
     ) : BillObject(
         id,
@@ -292,7 +328,9 @@ sealed class BillObject(
         fees,
         pinned,
         link,
-        paymentHistory
+        paymentHistory,
+        autoPay,
+        autoPayDiscount
     ), Serializable {
         data class SubscriptionDetails(
             private val _amount: Double = 0.0,
@@ -322,7 +360,9 @@ sealed class BillObject(
         override var fees: List<BillFee> = emptyList(),
         override val pinned: Boolean = false,
         override val link: String = "",
-        override val paymentHistory: List<BillPayment> = emptyList()
+        override val paymentHistory: List<BillPayment> = emptyList(),
+        override val autoPay: Boolean = false,
+        override val autoPayDiscount: Double = 0.0
     ) : BillObject(
         id,
         billName,
@@ -332,7 +372,9 @@ sealed class BillObject(
         fees,
         pinned,
         link,
-        paymentHistory
+        paymentHistory,
+        autoPay,
+        autoPayDiscount
     ), Serializable
 }
 
@@ -370,6 +412,18 @@ object SampleBillObjectList {
             link = "",
             pinned = false,
             details = BillObject.BillBalance(_balance = 25000.0)
+        ),
+        BillObject.Utility(
+            id = 4,
+            billName = "Comcast Internet",
+            nextPayment = BillObject.BillPayment(_amount = 49.99, paymentDate = "06/11/2022"),
+            pastDue = 0.0,
+            comments = "",
+            fees = emptyList(),
+            link = "",
+            pinned = false,
+            autoPay = true,
+            autoPayDiscount = 5.0
         )
     )
 }

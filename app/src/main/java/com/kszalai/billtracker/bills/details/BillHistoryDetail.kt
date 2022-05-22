@@ -54,18 +54,32 @@ private fun BillDetails(
                 Text("Loading...")
             } else {
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        painter = painterResource(id = data.selectedBill.getIcon()),
-                        contentDescription = "Bill Type Icon",
-                        tint = BillTrackerColors.TextColor
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = data.selectedBill.billName,
-                        fontSize = 32.sp
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(id = data.selectedBill.getIcon()),
+                            contentDescription = "Bill Type Icon",
+                            tint = BillTrackerColors.TextColor
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = data.selectedBill.billName,
+                            fontSize = 32.sp
+                        )
+                    }
+                    if (data.selectedBill.autoPay) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_autopay),
+                            contentDescription = "Auto Pay enabled icon",
+                            tint = BillTrackerColors.TextColor,
+                            modifier = Modifier.height(30.dp)
+                        )
+                    }
                 }
                 BillTypeDetails(data = data.selectedBill)
                 BillPayment(data = data.selectedBill)
@@ -172,14 +186,25 @@ private fun PastDue(pastDue: Double) {
 
 @Composable
 private fun BillTypeDetails(data: BillObject) {
-    Spacer(modifier = Modifier.height(8.dp))
-    when (data) {
-        is BillObject.AutoLoan -> BillBalance(data = data.details)
-        is BillObject.CreditCard -> DetailCreditInfo(data = data.details)
-        is BillObject.Mortgage -> BillBalance(data = data.details)
-        is BillObject.Subscription -> SubscriptionDetails(data = data.details)
+    Column {
+        Spacer(modifier = Modifier.height(8.dp))
+        when (data) {
+            is BillObject.AutoLoan -> BillBalance(data = data.details)
+            is BillObject.CreditCard -> DetailCreditInfo(data = data.details)
+            is BillObject.Mortgage -> BillBalance(data = data.details)
+            is BillObject.Subscription -> SubscriptionDetails(data = data.details)
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        if (data.autoPay) {
+            Row {
+                Text(text = "Auto Pay Enabled")
+                if (data.autoPayDiscount != 0.0) {
+                    Text(text = " - Discount ${data.autoPayDiscount.formatToCurrency()}")
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
     }
-    Spacer(modifier = Modifier.height(8.dp))
 }
 
 @Composable

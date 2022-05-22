@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import com.kszalai.billtracker.common.extensions.determineComposableColorFromDat
 import com.kszalai.billtracker.common.extensions.getIcon
 import com.kszalai.billtracker.common.theme.BillTrackerColors
 import com.kszalai.billtracker.common.theme.BillTrackerTheme
+import com.kszalai.billtracker.R
 
 @ExperimentalMaterialApi
 @Composable
@@ -54,11 +56,25 @@ fun BillOverview(
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = data.buildPaymentString(),
-                    fontSize = 12.sp,
-                    color = BillTrackerColors.TextColor
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = data.buildPaymentString(),
+                        fontSize = 12.sp,
+                        color = BillTrackerColors.TextColor
+                    )
+                    if (data.autoPay) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_autopay),
+                            contentDescription = null,
+                            tint = BillTrackerColors.OnBackground,
+                            modifier = Modifier.height(15.dp)
+                        )
+                    }
+                }
                 BillAdditionalOverviewInfo(data = data)
             }
         }

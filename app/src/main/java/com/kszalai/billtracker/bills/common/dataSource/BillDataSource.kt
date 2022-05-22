@@ -107,6 +107,18 @@ class BillDataSource {
                 )
             )
         )
+        add(
+            BillObject.Utility(
+                id = 5,
+                billName = "Comcast Internet",
+                nextPayment = BillObject.BillPayment(
+                    _amount = 49.99,
+                    paymentDate = "06/11/2022"
+                ),
+                autoPay = true,
+                autoPayDiscount = 5.0
+            )
+        )
     }
 
     suspend fun getBills(): List<BillObject> = withContext(Dispatchers.IO) {
