@@ -10,5 +10,11 @@ data class AddBillUIState(
     val comment: String = "",
     val link: String = "",
     val autoPay: Boolean = false,
-    val autoPayDiscount: String = ""
+    val autoPayDiscount: String = "",
+    val initialLoanAmount: String = "",
+    val currentLoanAmount: String = "",
+    val subscriptionFrequencyExpanded: Boolean = false,
+    val subscriptionFrequency: String = "",
+    val subscriptionFrequencyNotes: String = "",
+    val subscriptionAmount: String = ""
 )

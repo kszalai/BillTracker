@@ -49,6 +49,34 @@ sealed class BillObject(
         val paymentDate: String = ""
     )
 
+    enum class BillTypes(val dropdownChoice: String) {
+        AutoLoan("Auto Loan"),
+        CreditCard("Credit Card"),
+        Generic("Generic"),
+        Insurance("Insurance"),
+        Loan("Loan"),
+        Mortgage("Mortgage"),
+        StudentLoan("Student Loan"),
+        Subscription("Subscription"),
+        Utility("Utility");
+
+        companion object {
+            fun dropdownChoices(): List<String> {
+                return listOf(
+                    AutoLoan.dropdownChoice,
+                    CreditCard.dropdownChoice,
+                    Generic.dropdownChoice,
+                    Insurance.dropdownChoice,
+                    Loan.dropdownChoice,
+                    Mortgage.dropdownChoice,
+                    StudentLoan.dropdownChoice,
+                    Subscription.dropdownChoice,
+                    Utility.dropdownChoice
+                )
+            }
+        }
+    }
+
     data class Builder(
         var billName: String? = null,
         var nextPayment: BillPayment? = null,
@@ -447,7 +475,17 @@ sealed class BillObject(
                 WEEKLY,
                 MONTHLY,
                 YEARLY,
-                UNSPECIFIED
+                UNSPECIFIED;
+
+                companion object {
+                    fun toDropdownChoices(): List<String> {
+                        return listOf(
+                            WEEKLY.name.lowercase().replaceFirstChar { it.uppercase() },
+                            MONTHLY.name.lowercase().replaceFirstChar { it.uppercase() },
+                            YEARLY.name.lowercase().replaceFirstChar { it.uppercase() }
+                        )
+                    }
+                }
             }
         }
     }

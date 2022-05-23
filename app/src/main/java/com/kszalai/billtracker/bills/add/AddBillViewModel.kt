@@ -48,6 +48,61 @@ class AddBillViewModel @Inject constructor(
         )
     }
 
+    fun onAutoPayCheckChanged(autoPay: Boolean) {
+        uiState.value = uiState.value.copy(
+            autoPay = autoPay
+        )
+    }
+
+    fun onAutoPayDiscountChanged(discount: String) {
+        uiState.value = uiState.value.copy(
+            autoPayDiscount = discount
+        )
+    }
+
+    fun onLinkChanged(link: String) {
+        uiState.value = uiState.value.copy(
+            link = link
+        )
+    }
+
+    fun onCommentChanged(comment: String) {
+        uiState.value = uiState.value.copy(
+            comment = comment
+        )
+    }
+
+    fun onInitialLoanAmountChanged(amount: String) {
+        uiState.value = uiState.value.copy(
+            initialLoanAmount = amount
+        )
+    }
+
+    fun onCurrentLoanAmountChanged(amount: String) {
+        uiState.value = uiState.value.copy(
+            currentLoanAmount = amount
+        )
+    }
+
+    fun onSubscriptionFrequencyExpandedChange(expanded: Boolean) {
+        uiState.value = uiState.value.copy(
+            subscriptionFrequencyExpanded = expanded
+        )
+    }
+
+    fun onSubscriptionFrequencySelected(selectedFrequencyType: String) {
+        uiState.value = uiState.value.copy(
+            subscriptionFrequency = selectedFrequencyType,
+            subscriptionFrequencyExpanded = false
+        )
+    }
+
+    fun onSubscriptionAmountChange(amount: String) {
+        uiState.value = uiState.value.copy(
+            subscriptionAmount = amount
+        )
+    }
+
     fun onAddBill() {
         viewModelScope.launch {
             billRepo.addBill(
